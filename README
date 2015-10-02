@@ -1,3 +1,7 @@
+BCM963xx firnware for AH4222 Hitachi Tecom router Version 44 by Club Internet
+
+Needed for the compilation: the uclibc crosstools - toolchain for mips -- http://uclibc.org/
+
 BCM963xx Consumer Release Notes
 
 This release contains all of the files needed to build a BCM963xx DSL Router
