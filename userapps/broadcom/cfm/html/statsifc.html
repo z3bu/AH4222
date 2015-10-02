@@ -1,0 +1,159 @@
+<html>
+   <head>
+      <meta http-equiv='Pragma' content='no-cache'>
+      <meta http-equiv="refresh" content="15">
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type='text/css'>
+         <!--<style type='text/css'>
+         .mainTitle  {color: #afb3b5; font-size: 25pt; font-family: "Helvetica Neue"; font-weight: bolder}
+         .mainCharacter {color: #ffffff; font-size: 11pt; font-family: "Verdana"; font-weight: bolder}
+         .content1  {color: #000000; background-color: #e0e0e0; font-size: 10pt; font-family: "Verdana"; font-weight: normal}
+         .but {font-family:tahoma,arial,helvetica,sans-serif; font-size:12px; border:1px solid #000000; background-color:#E2007A; color:#ffffff; font-weight:bold;}
+         </style>-->
+          <script language="javascript" src="util.js"></script>
+          <script language="javascript" src="portName.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function frmLoad() {
+   var updateIfc = '<%ejFncCmd(stsifcupdate)%>';
+}
+
+function resetClick() {
+   var loc = 'statsifcreset.html';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+	    <!--<font class='mainTitle'>INFORMATIONS MODEM</font>-->
+            <img src='titres/titre_infos.gif' width='300' height='25'>
+	       <hr color='#afb3b5' size='4' align='left' width='597'>
+	          <table border='0' cellpadding='3' cellspacing='0' width='597'>
+		     <tr bgcolor='#e2007a' height='20'><td align='left'>
+                        <font class='mainCharacter'>Statistiques du R&eacute;seau Local (LAN) </font>
+                     </td></tr>
+                  </table><br>
+                  <table border="1" cellpadding="4" cellspacing="0" width='597'>
+                     <tr align='center'>
+                        <td class='content3' width='100'>Port</td>
+                        <td class='content3' colspan="4" width='200'><center>Re&ccedil;us</center></td>
+                        <td class='content3' colspan="4" width='200'><center>Transmis</center></td>
+                     </tr>
+                  <tr>
+                     <td class='content3'>&nbsp;</td>
+                     <td class='content3'>Octets</td>
+                     <td class='content3'>Paquets</td>
+                     <td class='content3'>Erreurs</td>
+                     <td class='content3'>Perdus</td>
+                     <td class='content3'>Octets</td>
+                     <td class='content3'>Paquets</td>
+                     <td class='content3'>Erreurs</td>
+                     <td class='content3'>Perdus</td>
+                 </tr>
+<script language="javascript">
+<!-- hide
+
+var numEnet = '<%ejGet(numEnet)%>';
+var brdId = '<%ejGet(boardID)%>';
+var dispName = ' ';
+
+if ( numEnet == '2' ) {
+   dispName = getUNameByLName(brdId + '|eth1');
+   document.writeln("               <tr>");
+   document.writeln("                  <td class='content3' bgcolor='#f3f3f3'>Ethernet " + dispName + "</td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 0)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 1)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 2)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 3)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 4)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 5)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 6)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 3, 7)%></td>");
+   document.writeln("               </tr>");
+   dispName = getUNameByLName(brdId + '|eth0');
+   document.writeln("               <tr>");
+   document.writeln("                  <td class='content3' bgcolor='#f3f3f3'>Ethernet " + dispName + "</td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 0)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 1)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 2)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 3)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 4)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 5)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 6)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 7)%></td>");
+   document.writeln("              </tr>");
+}
+else {
+   document.writeln("               <tr>");
+   document.writeln("                  <td class='content3' bgcolor='#f3f3f3'>Ethernet</td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 0)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 1)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 2)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 3)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 4)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 5)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 6)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 0, 7)%></td>");
+   document.writeln("               </tr>");
+}
+
+var enblUsb = '<%ejGet(enblUsb)%>';
+
+if ( enblUsb == '1' ) {
+   document.writeln("               <tr>");
+   document.writeln("                  <td class='content3' bgcolor='#f3f3f3'>USB</td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 0)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 1)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 2)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 3)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 4)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 5)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 6)%></td>");
+   document.writeln("                  <td><%ejGetOther(stsifcget, 1, 7)%></td>");
+   document.writeln("               </tr>");
+}
+
+var ifc = '<%ejGetWl(wlInterface)%>';
+
+if ( ifc == '1' ) {
+   document.writeln("  <tr>");
+   document.writeln("    <td class='content3' bgcolor='#f3f3f3'>Wifi</td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 0)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 1)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 2)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 3)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 4)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 5)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 6)%></td>");
+   document.writeln("    <td><%ejGetOther(stsifcget, 2, 7)%></td>");
+   document.writeln("  </tr>");
+}
+// done hiding -->
+</script>
+            </table>
+            <br>
+            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+            <!--<div align='center'>-->
+            <!--<input type='button' onClick='resetClick()' class='but' value='R&eacute;initialiser les statistiques'>-->
+            <table width='597'><tr><td align='center'>           
+            <img border='0' onClick='resetClick()' src='button/btn_reinitialiser_on.gif' hspace='6' vspace='6' width='200' height='25' style="CURSOR: hand">
+            </td></tr></table>
+            <!--</div>-->
+         </form>
+      </blockquote>
+   </body>
+</html>

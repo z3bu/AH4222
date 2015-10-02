@@ -1,0 +1,126 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+      <link rel='stylesheet' href='club.css' type='text/css'>
+      <script language="javascript" src="portName.js"></script>
+   </head>
+   <body>
+      <blockquote>
+         <form>
+           <img src='titres/titre_diagnostic.gif' width='160' height='25'>
+           <hr width='597' color='#afb3b5' size='4' align='left'>
+           <table border='0' cellpadding='3' cellspacing='0' width='597'>
+           <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Diagnostic <%ejGetOther(diagInfo, serviceName)%></font></td></tr></table>
+           <table border='0' cellpadding='3' cellspacing='0' width='597'>
+           <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>Votre modem est capable de tester la connexion DSL. Les différents tests sont listés ci-dessous.</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>Si un test affiche "Echec", Cliquer sur "Tester" pour vérifier les paramètres affichés.</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>Si "Echec" continue à apparaître et que votre connexion Internet ne fonctionne pas, vérifier les branchements de votre modem et relancer le Test.</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>Enfin si le test continue d'échouer, cliquer sur "Aide" et suivre les procédures de résolutions de problèmes</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'><b>Tester la connexion au réseau local:</b></td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>
+               <TABLE border="1" cellspacing="0" cellpadding="3">
+                  <TBODY>
+                     <script language="javascript">
+<!-- hide
+var dispName = '';
+if ('<%ejGet(enblUsb)%>' == '1') {
+   document.writeln("<TR><TD class='content3'>Port USB:</TD>");
+   document.writeln("<TD><B><%ejGetOther(diagnostic, 13)%></B>&nbsp;</TD>");
+   document.writeln("<TD><A class='hlink' href='hlpusbconn.html'>Aide</A></TD> </TR>");
+}
+if ('<%ejGet(enblWireless)%>' == '1') {
+   document.writeln("<TR><TD class='content3'>Accès Connexion Wifi:</TD>");
+   document.writeln("<TD><B><%ejGetOther(diagnostic, 17)%></B>&nbsp;</TD>");
+   document.writeln("<TD><A class='hlink' href='hlpwlconn.html'>Aide</A></TD></TR>");
+}
+// done hiding -->
+</script>
+                  </TBODY></TABLE>
+            </td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'><b>Tester du raccordement à la ligne ADSL:</b></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' align='left'>
+               <TABLE border="1" cellspacing="0" cellpadding="3">
+                  <TBODY>
+                     <TR>
+                        <TD class='content3' width="250">Synchronisation ADSL:</TD>
+                        <TD width="50"><B><%ejGetOther(diagnostic, 2)%></B>&nbsp;</TD>
+                        <TD><A class='hlink' href="hlpadslsync.html">Help</A></TD>
+                     </TR>
+                     <TR>
+<script language="javascript">
+<!-- hide
+var diagType = '<%ejGet(diagType)%>';
+if ( diagType == 'f4' )
+   document.writeln("                        <TD class='content3'>Ping sur segment ATM OAM:</TD>");
+else
+   document.writeln("                        <TD class='content3'>Ping sur segment ATM OAM:</TD>");
+// done hiding -->
+</script>
+                        <TD><B><%ejGetOther(diagnostic, 3)%></B>&nbsp;</TD>
+                        <TD><A class='hlink' href="hlpatmseg.html">Aide</A></TD>
+                     </TR>
+                     <TR>
+<script language="javascript">
+<!-- hide
+if ( diagType == 'f4' )
+   document.writeln("                        <TD class='content3'>Ping ATM OAM complet:</TD>");
+else
+   document.writeln("                        <TD class='content3'>Ping ATM OAM complet:</TD>");
+// done hiding -->
+</script>
+                        <TD><B><%ejGetOther(diagnostic, 4)%></B>&nbsp;</TD>
+                        <TD><A class='hlink' href="hlpatmetoe.html">Aide</A></TD>
+                     </TR>
+                  </TBODY></TABLE>
+           </td></tr>
+           <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+           </table>
+           <br><br>
+           <!--<CENTER>-->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<script language="javascript" src="util.js"></script>
+<script language="javascript">
+<!-- hide
+var diagPrev = '<%ejGetOther(diagInfo, diagPrev)%>';
+var diagNext = '<%ejGetOther(diagInfo, diagNext)%>';
+var GO_PREV = 0;
+var GO_NEXT = 1;
+
+function btnGo(where) {
+   var loc = 'diag.cgi?diagCurr=';
+    
+   if ( where == GO_PREV )
+      loc += diagPrev;
+   else
+      loc += diagNext;
+      
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+if ( diagPrev != '' )
+   document.writeln("<img border='0' onClick='btnGo(GO_PREV)' src='button/btn_connexion_on.gif' hspace='6' vspace='6' width='180' height='23' style='CURSOR: hand'>");
+if ( diagNext != '' )
+   document.writeln("<img border='0' onClick='btnGo(GO_NEXT)' src='button/btn_connex_suivante_on.gif' hspace='6' vspace='6' width='160' height='23' style='CURSOR: hand'>");
+// done hiding -->
+</script>
+        <table width='597'><tr><td align='center'>
+        <img border='0' onClick='location.href="diag.cgi?diagType=f5"' src='button/btn_tester_on.gif' hspace='6' vspace='6' width='90' height='23' style="CURSOR: hand">&nbsp;&nbsp;
+        <img border='0' onClick='location.href="diag.cgi?diagType=f4"' src='button/btn_testerOAM_on.gif' hspace='6' vspace='6' width='170' height='23' style="CURSOR: hand">
+        </td></tr></table>
+         </form>
+      </blockquote>
+   </body>
+</html>

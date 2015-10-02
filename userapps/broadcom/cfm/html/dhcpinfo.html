@@ -1,0 +1,38 @@
+<html>
+   <head>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+            <link rel="stylesheet" href="club.css" type='text/css'>
+            <meta http-equiv="Pragma" content="no-cache">
+            <meta http-equiv="refresh" content="20">
+            <title></title>
+            <base target="_self">
+   </head>
+         <!--<style type='text/css'>
+         .mainTitle  {color: #afb3b5; font-size: 25pt; font-family: 'Helvetica Neue'; font-weight: bold}
+         .mainCharacter {color: #ffffff; font-size: 11pt; font-family: 'Verdana'; font-weight: bolder}
+         .content1  {color: #000000; background-color: #e0e0e0; font-size: 10pt; font-family: 'Verdana'; font-weight: normal}
+         </style>-->
+   <body>
+      <blockquote>
+      <!--<font class='mainTitle'>INFORMATIONS MODEM</font>-->
+           <img src='titres/titre_infos.gif' width='300' height='25'>
+               <hr color='#afb3b5' size='4' align='left' width='597'>
+                  <table border='0' cellpadding='3' cellspacing='0' width='597'>
+                     <tr bgcolor='#e2007a' height='20'><td align='left' width='597'>
+                        <font class='mainCharacter'>Informations DHCP </font>
+                     </td></tr>
+                  </table>
+         <br><br>
+         <table border="1" cellpadding="4" cellspacing="0">
+            <tr>
+               <td class="content3" align='center'>Serveur</td>
+               <td class="content3" align='center'>Adresse MAC</td>
+               <td class="content3" align='center'>Adresse IP</td>
+               <td class="content3" align='center'>Expiré dans</td>
+	        </tr>
+            <%ejGet(dhcpLeases)%>
+         </table>
+      </blockquote>
+   </body>
+</html>

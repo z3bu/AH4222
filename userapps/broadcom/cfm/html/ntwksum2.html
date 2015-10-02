@@ -1,0 +1,159 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type="text/css">
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var ipExtension = '<%ejGet(pppIpExtension)%>';
+var prtcl = '<%ejGetOther(memInfo, ntwkPrtcl)%>';
+var qs = '<%ejGet(quickSetup)%>';
+
+function btnNext() {
+   var loc = 'wancfg.cmd?action=add';
+
+   // disable save button to avoid bugs while clicking this button too fast
+   document.forms[0].btnSave.disabled = 1;
+   
+   if ( qs == '1' )
+      loc = 'rebootinfo.cgi';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function btnBack() {
+   var ifc = '<%ejGetWl(wlInterface)%>';
+   var loc = 'natcfg2.html';
+
+   if ( qs == '1' ) {
+      if ( ifc == '1' )
+         loc = 'wlsetup.html';
+      else {
+         if ( prtcl == 'Bridge' )
+            loc = 'lancfgbr.html';
+         else if ( (ipExtension == '1') &&
+                   ((prtcl == 'PPPoE') || (prtcl == 'PPPoA')) )
+            loc = 'lancfgbr.html';
+         else
+            loc = 'lancfg.html';
+      }
+   } else {
+      if (prtcl == 'Bridge')
+         loc = 'enblbridge.html';
+      else if ( prtcl == 'PPPoE' || prtcl == 'PPPoA' )
+         loc = 'enblservice.html';
+      else if (prtcl == 'MER' || prtcl == 'IPoA')
+         loc = 'natcfg2.html';
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body>
+      <blockquote>
+         <form>
+            <!--<font class="mainTitle">CONFIGURATION AVANC&Eacute;E</font>-->
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="17"><td nowrap><font class="mainCharacter">RESEAU DISTANT(WAN)</font></td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+               <tr bgcolor="#f2f2f2"><td class="content1"><b>Configuration du réseau distant (WAN) - Résumé </b></td></tr>
+               <tr bgcolor="#f2f2f2"><td class="content1">Vérifier que les paramètres ci-dessous correspondent bien à ceux fournis par club Internet</td></tr>
+               <tr bgcolor="#f2f2f2"><td class="content1">
+                  <table border="1" cellpadding="3" cellspacing="0">
+                     <tr>
+                        <td class='content3'>VPI / VCI:</td>
+                        <td class='content5'><%ejGetOther(memInfo, vpiVci)%>&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td class='content3'>Type de connexion:</td>
+                        <td class='content5'><%ejGetOther(memInfo, ntwkPrtcl)%>&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td class='content3'>Nom de la connexion:</td>
+                        <td class='content5'><%ejGet(serviceName)%>&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td class='content3'>Catégorie de service:</td>
+                        <td class='content5'><%ejGet(atmServiceCategory)%>&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td class='content3'>Adresse IP:</td>
+                        <td class='content5'><%ejGetOther(memInfo, wanAddr)%>&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td class='content3'>État du service: </td>
+                        <td class='content5'><%ejGetOther(memInfo, enblService)%>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class='content3'>NAT:</td>
+                        <td class='content5'><%ejGetOther(memInfo, enblNat)%>&nbsp;</td>
+                    </tr>
+                    <tr>
+                       <td class='content3'>Firewall:</td>
+                       <td class='content5'><%ejGetOther(memInfo, enblFirewall)%>&nbsp;</td>
+                    </tr>
+                    <tr>
+                       <td class='content3'>IGMP Multicast:</td>
+                       <td class='content5'><%ejGetOther(memInfo, enblIgmp)%>&nbsp;</td>
+                    </tr>
+                    <tr>
+                       <td class='content3'>Qualit&eacute; de service:</td>
+                       <td class='content5'><%ejGetOther(memInfo, enblQos)%>&nbsp;</td>
+                   </tr>
+                </table>
+             </td></tr>
+<script language="javascript">
+<!-- hide
+if ( qs == 1 ) {
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>");
+   document.writeln('Click "Save/Reboot" to save these settings and reboot router. Click "Back" to make any modifications.');
+   document.writeln("</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>");
+   document.writeln('NOTE: The configuration process takes about 1 minute to complete and your DSL Router will reboot.');
+   document.writeln("</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>");
+   document.writeln("</table>");
+   document.writeln("<center>");
+   document.writeln("<img border='0' name='btnSave' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style='CURSOR: hand'>");
+   document.writeln("</center>");
+} else {
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>");
+   document.writeln("Cliquer sur « Sauver » pour appliquer vos paramètres. Cliquer sur « Retour » pour revenir à la page précédente.");
+   document.writeln("</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>");
+   document.writeln("<b>Remarque:</b>");
+   document.writeln("</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>");
+   document.writeln("Le modem doit être redémarré pour activer vos modifications.");
+   document.writeln("</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>");
+   document.writeln("</table>");
+   document.writeln("<table width='597'><tr><td align='center'>");
+   document.writeln("<img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style='CURSOR: hand'>&nbsp;&nbsp;<img border='0' name='btnSave' onClick='btnNext()' src='button/btn_sauver_on.gif' hspace='6' vspace='6' width='100' height='23' style='CURSOR: hand'>");
+   document.writeln("</td></tr></table>");
+}
+// done hiding -->
+</script>
+             </table>
+         </form>
+      </blockquote>
+   </body>
+</html>

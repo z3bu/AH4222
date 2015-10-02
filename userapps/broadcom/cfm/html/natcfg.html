@@ -1,0 +1,94 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var prtcl = '<%ejGetOther(memInfo, ntwkPrtcl)%>';
+
+function frmLoad() {
+   var nat = '<%ejGet(enblNat)%>';
+   var firewall = '<%ejGet(enblFirewall)%>';
+
+   with ( document.forms[0] ) {
+      if ( nat == '1' )
+         enblNat.checked = true;
+      else
+         enblNat.checked = false;
+      if ( firewall == '1' )
+         enblFirewall.checked = true;
+      else
+         enblFirewall.checked = false;
+   }
+}
+
+function btnNext() {
+   var loc = 'lancfg.cgi?';
+
+   with ( document.forms[0] ) {
+      if ( enblNat.checked == true )
+         loc += 'enblNat=1';
+      else
+         loc += 'enblNat=0';
+      if ( enblFirewall.checked == true )
+         loc += '&enblFirewall=1';
+      else
+         loc += '&enblFirewall=0';
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function btnBack() {
+   var loc;
+   if ( prtcl == 'IPoA' )
+      loc = 'ipoacfg.html';
+   else
+      loc = 'wancfg.html';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <b>Network Address Translation Settings</b><br>
+            <br>
+            Network Address Translation (NAT) allows you to share one Wide Area Network 
+            (WAN) IP address for multiple computers on your Local Area Network (LAN).<br>
+            <br>
+            Select the check box below to enable NAT.<br>
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td width='30' height="30"><input type='checkbox' name='enblNat'></td>
+                  <td>Enable NAT</td>
+               </tr>
+            </table>
+            <br>
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td width='30' height="30"><input type='hidden' name='enblFirewall'></td>
+                  <!--<td>Enable Firewall</td>--><td></td>
+               </tr>
+            </table>
+            <br>
+            <center>
+               <input type='button' onClick='btnBack()' value='Back'> <input type='button' onClick='btnNext()' value='Next'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>

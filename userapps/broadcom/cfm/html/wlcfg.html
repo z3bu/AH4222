@@ -1,0 +1,207 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href="club.css" type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var ssid = '<%ejGetWl(wlSsid)%>';
+var enbl = '<%ejGetWl(wlEnbl)%>';
+var hide = '<%ejGetWl(wlHide)%>';
+var country = '<%ejGetWl(wlCountry)%>';
+var wlRefresh = '<%ejGetWl(wlRefresh)%>';
+var band= '<%ejGetWl(wlBand)%>';
+var user = '<%ejGet(curUserName)%>';
+
+if ( wlRefresh == '1' ) {
+   if (isNetscape())
+      var code = 'location.replace("wlcfgrefresh.wl?wlRefresh=0")';
+   else
+      var code = 'location.assign("wlcfgrefresh.wl?wlRefresh=0")';
+   eval(code);   
+}
+
+function hideWlSecInfo(hidden) {
+   var status = 'visible';
+
+   with ( document.forms[0] ) {
+      var i = 0;
+      if ( hidden == 1 ) {
+         status = 'hidden';
+         wlHide.disabled = 1;
+         wlSsid.disabled = 1;
+         wlCountry.disabled = 1;
+      } else {
+         wlHide.disabled = 0;
+         wlSsid.disabled = 0;
+         wlCountry.disabled = 0;
+      }
+   }
+
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('wlSecInfo').style.visibility = status;
+   else {
+      if (document.layers == false) // IE4
+         document.all.wlSecInfo.style.visibility = status;
+   }
+}
+
+function wlSecCbClick(cb) {
+   if ( cb.checked == true )
+      hideWlSecInfo(0);
+   else
+      hideWlSecInfo(1);
+}
+
+function wlLoadCountryList()
+{
+   var phytype = "b";
+   var cur = 0;
+   var sel = 0;
+
+
+   if (band == "1") { // 5G
+      <%ejGetWl(wlCountryList_a)%>
+   } else {
+      <%ejGetWl(wlCountryList_b)%>
+   }
+
+   for (var i=0; i< document.forms[0].wlCountry.options.length; i++) {
+      if (document.forms[0].wlCountry.options[i].value == country) {
+         document.forms[0].wlCountry.options[i].selected = true;
+         break;
+      }
+   }
+}
+
+function frmLoad() {
+  
+   wlLoadCountryList();
+
+   with ( document.forms[0] ) {
+      if ( enbl == '1' ) {
+         wlEnbl.checked = true;
+         hideWlSecInfo(0);
+      } else {
+         wlEnbl.checked = false;
+         hideWlSecInfo(1);
+      }
+
+      if ( hide == '1' )
+         wlHide.checked = true;
+      else
+         wlHide.checked = false;
+
+      wlSsid.value = ssid;
+   }
+}
+
+function btnApply() {
+   var loc = 'wlcfg.wl?';
+
+   with ( document.forms[0] ) {
+      if ( wlEnbl.checked == false ) {
+         loc += 'wlEnbl=0';
+         loc += '&wlHide=' + hide;
+         loc += '&wlSsid=' + ssid;
+         loc += '&wlCountry=' + country;
+      } else {
+         if ( wlSsid.value == '' ) {
+            alert('Le SSID ne doit pas être vide.');
+            return;
+         }
+
+         var str = new String();
+         str = wlSsid.value;
+         if ( str.length > 32 ) {
+            alert('Le SSID "' + wlSsid.value + '"ne doit pas être plus long que 32 caractères.');
+            return;
+         }
+
+         if ( wlEnbl.checked == true )
+            loc += 'wlEnbl=1';
+         else
+            loc += 'wlEnbl=0';
+
+         if ( wlHide.checked == true )
+            loc += '&wlHide=1';
+         else
+            loc += '&wlHide=0';
+
+         loc += '&wlSsid=' + encodeUrl(wlSsid.value);
+
+         var idx = wlCountry.selectedIndex;
+         loc += '&wlCountry=' + wlCountry.options[idx].value;
+      }
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form onSubmit='return false'>
+            <img src='titres/titre_reseau.gif' width='230' height='25'>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Paramètres de base</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cette page vous permet de modifier les paramètres de base de votre borne Wifi.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Vous pouvez activer ou désactiver le service Wifi, masquer l'accès au réseau, définir le nom de votre point d'accès (le SSID) et restreindre le canal conformément aux restrictions du pays.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'>
+               <td valign="middle" align="center" width="60"><input type='checkbox' name='wlEnbl' onClick='wlSecCbClick(this)' value="ON"></td>
+               <td class='content1' width="537">Activer le Wifi</td>
+            </tr>
+            </table>
+            <div id='wlSecInfo'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'>
+               <td valign="middle" align="center" width="60"><input type='checkbox' name='wlHide' value="ON"></td>
+               <td class='content1'>Masquer le point d'accès</td>
+            </tr>
+<script language='javascript'>
+            if(user != 'user')
+            {
+               document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' width='60'>SSID:</td>");
+               document.writeln("<td><input type='text' name='wlSsid' maxlength='32' size='20'>-<%ejGetWl(bcmMac_LowBytes)%></td></tr>");
+            }
+            else
+            {
+               document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' width='60'>SSID:</td>");
+               document.writeln("<td><input type='text' name='wlSsid' maxlength='32' size='20' disabled>-<%ejGetWl(bcmMac_LowBytes)%></td></tr>");
+            }
+</script>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='60'>BSSID:</td>
+               <td><%ejGetWl(wlBssid)%></td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='60'>Pays:</td>          
+               <td><select name='wlCountry' size="1">
+                   </select></td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            </div>
+            <br>
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6'  width='160' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            <!--<center>
+               <input type='button' onClick='btnApply()' value='Save/Apply'>
+            </center>-->
+         </form>
+      </blockquote>
+   </body>
+</html>

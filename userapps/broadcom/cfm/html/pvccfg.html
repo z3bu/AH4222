@@ -1,0 +1,621 @@
+<html>
+   <head>
+      <meta http-equiv="Pragma" content="no-cache">
+      <!--<LINK href="stylemain.css" type="text/css" rel="stylesheet">
+         <LINK href="colors.css" type="text/css" rel="stylesheet">-->
+         <link rel='stylesheet' href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var upRate = parseInt('<%ejGetOther(lineRate, 0)%>');
+var pcrMax = 1887;   // 1887 * 53 * 8 = 800000
+var serviceCat = '<%ejGet(atmServiceCategory)%>';
+var qos = '<%ejGet(enblQos)%>';
+var hideQos = false;
+var serviceId = '<%ejGet(serviceId)%>';
+var numQueue = parseInt('<%ejGetOther(memInfo, queueNum)%>');
+var numQueueMax = 8;
+
+var enetWan = parseInt('<%ejGet(enblEnetWan)%>');
+var vpi = '<%ejGet(atmVpi)%>';
+var vci = '<%ejGet(atmVci)%>';
+var user = '<%ejGet(curUserName)%>';
+
+if ( isNaN(upRate) == false )
+   pcrMax = Math.ceil((upRate * 1000) / (53 * 8));
+
+var numPvcMax = 8;
+var chipId = <%ejGetOther(sysInfo, chipId)%>;
+
+if ( chipId == 0x6348 )
+   numPvcMax = 16;
+else if ( chipId == 0x6338 )
+   numPvcMax = 1;
+
+var numEnet = parseInt('<%ejGet(numEnet)%>');
+var numPvc = parseInt('<%ejGet(numPvc)%>');
+   
+function disableQos() {
+   with ( document.forms[0] ) {
+      enblQos.checked = false;
+      enblQos.disabled = 1;
+   }
+}
+
+function enableQos() {
+   with ( document.forms[0] ) {
+      if ( qos == '1' )
+         enblQos.checked = true;
+      else
+         enblQos.checked = false;
+      enblQos.disabled = 0;
+   }
+}
+
+function hideQosInfo(hide) {
+   var status = 'visible';
+
+   if ( hide == 1 ) {
+      status = 'hidden';
+      disableQos();
+   } else
+      enableQos();
+
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('qosInfo').style.visibility = status;
+   else {
+      if (document.layers == false) // IE4
+         document.all.qosInfo.style.visibility = status;
+   }
+}
+
+function hideInfo(hide) {
+
+   with (document.forms[0]) {
+      if (hide == 3)    // hide all 3
+      {
+         if (document.getElementById) { // DOM3 = IE5, NS6
+            document.getElementById('first1').style.visibility = 'hidden';
+            document.getElementById('2and3').style.visibility = 'hidden';
+         }
+         else { // add more
+         }
+      }
+      else if (hide == 2)  // hide 2 and 3
+      {
+         if (document.getElementById) { // DOM3 = IE5, NS6
+            document.getElementById('2and3').style.visibility = 'hidden';
+            document.getElementById('first1').style.visibility = 'visible';
+         }
+         else {// add more
+         }
+      }
+      else if (hide == 0) // hide none
+      {
+         if (document.getElementById) { // DOM3 = IE5, NS6
+            document.getElementById('first1').style.visibility = 'visible';
+            document.getElementById('2and3').style.visibility = 'visible';
+         }
+         else { // add more
+         }
+      }
+   }
+}
+
+function shouldQosBeHidden() {
+   var ret = false;
+   
+   // QoS cannot be enabled for 6338 chip
+   if ( chipId == 0x6338 )
+      ret = true;
+   // only allow QoS enabled for ubr, ubrwpcr, ntr_vbr
+   else if ( serviceCat == 'UBR' ||
+             serviceCat == 'UBRwPCR' ||
+             serviceCat == 'NRT_VBR' ) {
+      // if PVC is not QoS enabled
+      if ( qos == '0' ) {
+         // if add new PVC
+         if ( serviceId == '0' ) {
+            if ( numQueue > 5 )   // 5 = 8 - 3
+               ret = true;
+         } else {   // if edit existed PVC
+            if ( numQueue > 6 )   // 6 = 8 - 3 + 1
+               ret = true;
+         }
+      }
+   } else
+      ret = true;
+  
+   if(user != 'root')
+      ret = true;
+      
+   return ret;
+}
+
+function hideVccInfo(hide) {
+   var status = 'visible';
+
+   if ( hide == 1 ) {
+      status = 'hidden';
+      hideInfo(3);
+      hideQosInfo(1);
+      document.forms[0].enblEnetWanCb.checked = true;
+   } else {
+      hideQosInfo(0);
+      hideInfo(3);
+      document.forms[0].enblEnetWanCb.checked = false;
+   }
+   if (document.getElementById) {  // DOM3 = IE5, NS6
+      document.getElementById('vccInfo').style.visibility = status;
+   } else {
+      if (document.layers) { // Netscape 4
+         with ( document.forms[0] ) {
+            if ( hide == 1 ) {
+               atmVpi.value = '';
+               atmVci.value = '';
+            } else {
+               atmVpi.value = vpi;
+               atmVci.value = vci;
+            }
+         }
+      } else  // IE 4
+         document.all.vccInfo.style.visibility = status;
+   }
+}
+
+function ethWanCfgCbClick(cb) {
+   if ( cb.checked == true )
+   {
+      document.getElementById('buttonfield1').style.visibility = 'visible';
+      document.getElementById('buttonfield2').style.visibility = 'hidden';
+      hideVccInfo(1);
+   }
+   else
+   {
+      document.getElementById('buttonfield1').style.visibility = 'hidden';
+      document.getElementById('buttonfield2').style.visibility = 'visible'; 
+      hideVccInfo(0);
+   }
+   move_position();
+}
+
+function frmLoad() {
+   // If number of ethernet ports is less than 2 or number of PVCs configed is
+   // greater than 1 or if WAN over ethernet is disabled == 2 then hide it.
+   if (enetWan > 1 || numEnet < 2 || numPvc > 1) {
+      if (document.getElementById) {  // DOM3 = IE5, NS6
+         document.getElementById('enetwan').style.visibility = 'hidden';
+      }
+   } else {
+      if (document.getElementById) {  // DOM3 = IE5, NS6
+         document.getElementById('enetwan').style.visibility = 'visible';
+      }
+   }
+
+   hideQos = shouldQosBeHidden();
+
+   if ( enetWan == 1 ) {
+      document.forms[0].enblEnetWanCb.checked = true;
+      hideVccInfo(1);
+   } else if ( hideQos == true )
+      hideQosInfo(1);
+   else
+      hideQosInfo(0);
+   
+   with ( document.forms[0] ) {
+      atmVpi.value = '<%ejGet(atmVpi)%>';
+      atmVci.value = '<%ejGet(atmVci)%>';
+      peakCell.value  = '<%ejGet(atmPeakCellRate)%>';
+      sustainableCell.value = '<%ejGet(atmSustainedCellRate)%>';
+      maximumBurst.value = '<%ejGet(atmMaxBurstSize)%>'
+   }
+   
+   if (serviceCat == 'UBR') {
+      document.forms[0].serviceCategory[0].selected = true;
+      hideInfo(3);
+   }
+   else if (serviceCat == 'UBRwPCR') {
+      document.forms[0].serviceCategory[1].selected = true;
+      hideInfo(2);
+   }
+   else if (serviceCat == 'CBR') {
+     document.forms[0].serviceCategory[2].selected = true;
+      hideInfo(2);
+   }
+   else if (serviceCat == 'NRT_VBR') {
+      document.forms[0].serviceCategory[3].selected = true;
+      hideInfo(0);
+   }
+   else if (serviceCat == 'RT_VBR') {
+      document.forms[0].serviceCategory[4].selected = true;
+      hideInfo(0);
+   }
+
+   // if add new PVC
+   if ( serviceId == '0' ) {
+      // if it is 6348 chip
+      if ( chipId == 0x6348 ) {
+         // if PVC is available but queue is not then
+         // only allow to add UBR PVC
+         if ( numPvc < numPvcMax && numQueue >= numQueueMax ) {
+            for ( i = 4; i > 0; i-- )
+               document.forms[0].serviceCategory.options[i] = null;
+            hideInfo(3);
+         }
+      } else if ( chipId == 0x6338 ) {
+         // if it is 6338 chip then only allow to add UBR PVC
+         for ( i = 4; i > 0; i-- )
+            document.forms[0].serviceCategory.options[i] = null;
+         hideInfo(3);
+      }
+   }
+      document.getElementById('buttonfield1').style.visibility = 'hidden';
+      document.getElementById('buttonfield2').style.visibility = 'visible';
+    move_position();
+}
+
+function btnBack() {
+   if (isNetscape())
+      var code = 'location.replace("' + 'wancfg.cmd'+ '")';
+   else
+      var code = 'location.assign("' + 'wancfg.cmd'+ '")';
+   eval(code);
+}
+
+
+function btnNext() {
+   var loc = 'ntwkprtcl.cgi?';
+
+   with ( document.forms[0] ) {
+      if ( isNaN(parseInt(atmVpi.value)) == true ) {
+         alert('Le VPI "' + atmVpi.value + '" est incorrect.');
+         return;
+      }
+      if ( isNaN(parseInt(atmVci.value)) == true ) {
+         alert('Le VCI "' + atmVci.value + '" est incorrect.');
+         return;
+      }
+      vpi = parseInt(atmVpi.value);
+      if ( vpi < 0 || vpi > 255 ) {
+         alert('Le VPI "' + atmVpi.value + '" doit être compris entre [0-255]. ');
+         return;
+      }
+      vci = parseInt(atmVci.value);
+      if ( vci < 32 || vci > 65535 ) {
+         alert('Le VCI "' + atmVci.value + '" doit être compris entre [32-65535].');
+         return;
+      }
+      loc += 'atmVpi=' + atmVpi.value;
+      loc += '&atmVci=' + atmVci.value;
+      loc += '&atmServiceCategory=' + serviceCategory.value;
+      if (serviceCategory.value != 'UBR') {
+         if ( isNaN(parseInt(peakCell.value)) == true) {
+            alert('Le taux maximal de cellules "' + peakCell.value + '" est incorrect.');
+            return;
+         }
+         peak = parseInt(peakCell.value);
+         if ( peak <= 0 || peak > pcrMax ) {
+            alert('Le taux maximal de cellules "' + peakCell.value + '" doit être compris entre [1-' + pcrMax + '].');
+            return;
+         }
+         loc += '&atmPeakCellRate=' + peakCell.value;
+      } else
+         loc += '&atmPeakCellRate=0';
+      if (serviceCategory.value == 'NRT_VBR' || serviceCategory.value == 'RT_VBR') {
+         if ( isNaN(parseInt(sustainableCell.value)) == true) {
+            alert('Le taux cellulaire soutenable"' + sustainableCell.value + '" est incorrect.');
+            return;
+         }
+         sustainable = parseInt(sustainableCell.value);
+         if ( sustainable <= 0 || sustainable > pcrMax ) {
+            alert('Le taux cellulaire soutenable "' + sustainableCell.value + '" doit être compris entre [1-' + pcrMax + '].');
+            return;
+         }
+         if ( sustainable >= peak) {
+            alert('Le taux cellulaire soutenable "' + sustainableCell.value + '" doit être inférieur au taux maximal de cellules. ');
+            return;
+         }
+         if ( isNaN(parseInt(maximumBurst.value)) == true) {
+            alert('La taille maximale de rafale "' + maximumBurst.value + '" est incorrecte.');
+            return;
+         }
+         maximum = parseInt(maximumBurst.value);
+         if ( maximum <= 0 || maximum > 1000000 ) {
+            alert('La taille maximale de rafale "' + maximumBurst.value + '" doit être comprise entre [1-1000000].');
+            return;
+         }
+         loc += '&atmSustainedCellRate=' + sustainableCell.value;
+         loc += '&atmMaxBurstSize=' + maximumBurst.value;
+      } else {
+         loc += '&atmSustainedCellRate=0';
+         loc += '&atmMaxBurstSize=0';
+      }
+      if ( enblQos.checked == true )
+         loc += '&enblQos=1';
+      else
+         loc += '&enblQos=0';
+      if (enetWan <= 1 && numEnet == 2 && numPvc <= 1) {
+         if ( document.forms[0].enblEnetWanCb.checked == true )
+            loc += '&enblEnetWan=1';
+         else
+            loc += '&enblEnetWan=0';
+      } else if (enetWan > 1) {
+          loc += '&enblEnetWan=0';
+      }
+   }
+   loc += '&quickSetup=' + 0;
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+
+function cbClick(obj) {
+   var idx = obj.selectedIndex;
+   var val = obj.options[idx].value;
+   if ( val == "UBR" )
+      hideInfo(3);
+   else if (val == "UBRwPCR" || val == "CBR")
+      hideInfo(2);
+   else
+      hideInfo(0);   
+   if (val == 'CBR' || val == 'RT_VBR')
+      hideQosInfo(1);     
+   else {
+      if ( hideQos == false )
+         hideQosInfo(0);    
+   }
+   move_position();   
+}
+
+function move_position()
+{
+   var vcc_sta = document.getElementById('vccInfo').style.visibility;
+   var first_sta = document.getElementById('first1').style.visibility;
+   var second_sta = document.getElementById('2and3').style.visibility;
+   var qos_sta = document.getElementById('qosInfo').style.visibility;
+   var enet_sta = document.getElementById('enetwan').style.visibility;
+   var button1_sta = document.getElementById('buttonfield1').style.visibility;
+   var button2_sta = document.getElementById('buttonfield2').style.visibility;
+
+   if(vcc_sta == 'hidden')
+   {
+      document.getElementById('vccInfo').style.position = 'absolute';
+      document.getElementById('vccInfo').style.top = '-1000';
+      document.getElementById('vccInfo').style.top = '-1000';   
+   }
+   else
+   {
+      document.getElementById('vccInfo').style.position = 'static';
+      document.getElementById('vccInfo').style.top = '0';
+      document.getElementById('vccInfo').style.top = '0';        
+   } 
+   
+   if(first_sta == 'hidden')
+   {
+      document.getElementById('first1').style.position = 'absolute';
+      document.getElementById('first1').style.top = '-1000';
+      document.getElementById('first1').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('first1').style.position = 'static';
+      document.getElementById('first1').style.top = '0';
+      document.getElementById('first1').style.top = '0';   
+   }   
+   
+   if(second_sta == 'hidden')
+   {
+      document.getElementById('2and3').style.position = 'absolute';
+      document.getElementById('2and3').style.top = '-1000';
+      document.getElementById('2and3').style.left = '-1000';
+   }
+   else
+   {
+      document.getElementById('2and3').style.position = 'static';
+      document.getElementById('2and3').style.top = '0';
+      document.getElementById('2and3').style.left = '0';
+   }
+
+   if(qos_sta == 'hidden')
+   {
+      document.getElementById('qosInfo').style.position = 'absolute';
+      document.getElementById('qosInfo').style.top = '-1000';
+      document.getElementById('qosInfo').style.left = '-1000';   
+   }
+   else
+   {
+      document.getElementById('qosInfo').style.position = 'static';
+      document.getElementById('qosInfo').style.top = '0';
+      document.getElementById('qosInfo').style.left = '0';    
+   }
+
+   if(enet_sta == 'hidden')
+   {
+      document.getElementById('enetwan').style.position = 'absolute';
+      document.getElementById('enetwan').style.top = '-1000';
+      document.getElementById('enetwan').style.left = '-1000';
+   }
+   else
+   {
+      document.getElementById('enetwan').style.position = 'static';
+      document.getElementById('enetwan').style.top = '0';
+      document.getElementById('enetwan').style.left = '0';
+   }
+
+   if(button1_sta == 'hidden')
+   {
+      document.getElementById('buttonfield1').style.position = 'absolute';
+      document.getElementById('buttonfield1').style.top = '-1000';
+      document.getElementById('buttonfield1').style.top = '-1000';   
+   }
+   else
+   {
+      document.getElementById('buttonfield1').style.position = 'static';
+      document.getElementById('buttonfield1').style.top = '0';
+      document.getElementById('buttonfield1').style.top = '0';        
+   }    
+   
+   if(button2_sta == 'hidden')
+   {
+      document.getElementById('buttonfield2').style.position = 'absolute';
+      document.getElementById('buttonfield2').style.top = '-1000';
+      document.getElementById('buttonfield2').style.top = '-1000';   
+   }
+   else
+   {
+      document.getElementById('buttonfield2').style.position = 'static';
+      document.getElementById('buttonfield2').style.top = '0';
+      document.getElementById('buttonfield2').style.top = '0';        
+   }    
+}
+// done hiding -->
+</script>
+   </head>
+   <body onload="frmLoad()">
+      <blockquote>
+         <form ID="Form1">
+            <!--<font class="mainTitle">CONFIGURATION AVANC&Eacute;E</font>-->
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="20"><td nowrap><font class="mainCharacter">RESEAU DISTANT (WAN)</font></td></tr></table>   
+            <div id='enetwan'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1"><strong>Configuration du WAN :</strong></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">
+Pour configurer l’interface WAN, veuillez entrer le numéro du PVC ATM approprié ou cocher l’option suivante afin d’activer le service WAN sur l’interface eth0. Veuillez noter qu’avant de sélectionner cette option vous devez supprimer toutes les configurations de PVC ATM existantes.
+            </td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">
+De même, lorsque vous choisissez cette option, vous ne pourrez plus configurer d’autres PVC ATM jusqu’à ce que le service WAN sur Ethernet soit supprimé.
+            </td></tr></table>
+            </div> 
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2">
+<script language="javascript">
+{
+   if (numEnet == 2 && numPvc <= 1 && enetWan <= 1) {
+         document.write("  <td height='30' class='content1'><input type='checkbox' name='enblEnetWanCb' onClick='ethWanCfgCbClick(this)'>");
+         document.write("  &nbsp;&nbsp;Activer le service WAN sur <b>Eth0</b></td>");
+   }
+}
+</script>
+            </tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <div id='buttonfield1'>
+            <table width='597'><tr><td align='center'>
+               <img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' Alt='Back' width='90' height='23' style="CURSOR: hand">&nbsp;&nbsp;<img border='0' onClick='btnNext()' src='button/btn_suivant_on.gif' hspace='6' vspace='6' Alt='Next' width='100' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            </div>
+            <div id='vccInfo'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1">
+            <strong>CONFIGURATION DU PVC ATM :</strong>
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1">
+            Ce menu vous permet de modifier les paramètres de votre PVC ATM.
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"  class="content1"><td class="content1">
+            <strong>ATTENTION :</strong>
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+            La modification de ces paramètres peut entraîner l'inactivité de votre service ADSL. 
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+            Il est conseillé de ne pas changer les valeurs ci-dessous à moins d'y être invité par un technicien de Club Internet.
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+            <table cellSpacing="4" cellPadding="0" border="0">
+               <tr>
+                  <td class="content1">VPI: (0-255)</td>
+                  <td><input type="text" size="4" name="atmVpi"></td>
+               </tr>
+               <tr>
+                  <td class="content1">VCI: (32-65535)</td>
+                  <td><input type="text" size="4" name="atmVci"></td>
+               </tr>
+            </table>
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+            <table border="0" cellpadding="0" cellspacing="0">
+               <tr>
+                  <td class="content1">Cat&eacute;gorie de service:</td>
+                  <td class="content1"><select name="serviceCategory" size="1" onClick='cbClick(this)'>
+                        <option value="UBR" selected>
+                        UBR Without PCR
+                        <option value="UBRwPCR">
+                        UBR With PCR
+                        <option value="CBR">
+                        CBR
+                        <option value="NRT_VBR">
+                        Non RealTime VBR
+                        <option value="RT_VBR">
+                        RealTime VBR</option>
+                     </select></td>
+               </tr>
+            </table>
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <div id='first1'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+               <table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td class="content1" width='250'>Taux maximal de cellules [cells/s]</td>
+                     <td><input type="text" size="6" name="peakCell"></td>
+                  </tr>
+               </table>
+            </td></tr></table>
+            </div>
+            <div id='2and3'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+               <table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td class="content1" width='250'>Taux cellulaire soutenable [cells/s]</td>
+                     <td><input id="Text5" type="text" size="6" name="sustainableCell"></td>
+                  </tr>
+                  <tr>
+                     <td class="content1" width='250'>Taille maximal de rafale [cells]</td>
+                     <td><input type="text" size="6" name="maximumBurst"></td>
+                  </tr>
+               </table>
+            </td></tr></table>
+            </div>
+            <div id='qosInfo'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+            <b>ACTIVER LA QUALIT&Eacute; DE SERVICE (QOS):</b></td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+            Pour autoriser la gestion de la qualité de service et améliorer la performance des classes d'applications, veuillez cocher par défaut la case ci-dessous.</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">
+               <table border="0" cellpadding="4" cellspacing="0">
+                  <tr>
+                     <td class='content1'>Activer la Qualité de service (QOS)</td>
+                     <td width='30' height="30"><input type='checkbox' name='enblQos'></td>
+                  </tr>
+               </table>
+            </td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597"><tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr></table>
+            </div>
+            </div>
+            <div id='buttonfield2'>
+            <table width='597'><tr><td align='center'>
+               <img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style="CURSOR: hand">&nbsp;&nbsp;<img border='0' onClick='btnNext()' src='button/btn_suivant_on.gif' hspace='6' vspace='6' width='100' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            </div>
+         </form>
+      </blockquote>
+   </body>
+</html>

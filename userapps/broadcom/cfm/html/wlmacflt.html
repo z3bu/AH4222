@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel='stylesheet' href="club.css" type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function btnApply() {
+   var loc = 'wlmacflt.cmd?action=add';
+   var enbl = '<%ejGetWl(wlEnbl)%>';
+
+   if ( enbl == '0' ) {
+      alert('Impossible d’appliquer le changement quand le réseau sans fil est désactivé.');
+      return;
+   }
+   
+   with ( document.forms[0] ) {
+      if ( isValidMacAddress(wlFltMacAddr.value) == false ) {
+         msg = "L'adresse MAC '" + wlFltMacAddr.value + "' est incorrecte.";
+         alert(msg);
+         return;
+      }
+
+      loc += '&wlFltMacAddr=' + wlFltMacAddr.value;
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body>
+      <blockquote>
+         <form onSubmit='return false'>
+            <img src='titres/titre_reseau.gif' width='230' height='25'>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Filtrage par adresse MAC</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Entrer une adresse MAC et cliquer sur "Sauver/Appliquer" pour l'ajouter dans la liste de filtrage par adresse MAC.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='120'>Adresse MAC:</td>
+               <td><input type='text' name='wlFltMacAddr' size='40'></td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            <br>
+            <!--<center><input type='button' onClick='btnApply()' value='Save/Apply'></center>-->
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style="CURSOR: hand">            
+            </td></tr></table>
+         </form>
+      </blockquote>
+   </body>
+</html>

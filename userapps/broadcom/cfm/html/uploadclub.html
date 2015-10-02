@@ -1,0 +1,96 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+      <link rel='stylesheet' href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var msg = new Array();
+msg[0] = 'Le téléchargement est en cours et le modem redémarrera une fois terminé. Ce processus peut durer environ deux minutes.';
+msg[1] = "Le téléchargement de l’image a échoué. Le système n'a pas assez de mémoire. Le modem est en train de redémarrer.";
+msg[2] = 'Le téléchargement de l’image a échoué. Aucun fichier image n’a été sélectionné.';
+msg[3] = "Le téléchargement de l'image a échoué. <br>Le fichier sélectionné contient une image corrompue."
+msg[4] = 'Erreur Fatal pendant le téléchargement de l’image.';
+
+var idxStr = '<%ejGetOther(sysInfo, upldSts)%>';
+var user = '<%ejGet(curUserName)%>';
+
+function getMsgIndex() {
+   var idxNum = parseInt(idxStr);
+   if ( isNaN(idxNum) || idxNum < 0 || idxNum > 4 )
+      idxNum = 4;
+
+   return idxNum;
+}
+
+function reboot() {
+   var enblPopWin = '<%ejGet(enblPopWin)%>';
+   var loc = 'main.html';
+   if (isNetscape())
+      var code = 'window.top.location.replace("' + loc + '")';
+   else
+      var code = 'window.top.location.assign("' + loc + '")';
+
+   if ( enblPopWin == '1' ) {
+      loc = 'index.html';
+      if (isNetscape())
+         code = 'location.replace("' + loc + '")';
+      else
+         code = 'location.assign("' + loc + '")';
+   }
+
+   eval(code);
+}
+
+function frmLoad() {
+   // only reboot if upload progress is successful
+   if ( getMsgIndex() == 0 )
+      setTimeout('reboot()', 40000);
+}
+
+function btnBack() {
+   if(user == 'support')
+   {
+      if (isNetscape())
+         var code = 'location.replace("' + 'info_support.html' + '")';
+      else
+         var code = 'location.assign("' + 'info_support.html' + '")';
+   }
+   else
+   {
+      if (isNetscape())
+         code = 'location.replace("' + 'info_user.html' + '")';
+      else
+         code = 'location.assign("' + 'info_user.html' + '")';
+   }
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+            <img src='titres/titre_gestion.gif' width='270' height='25'><br>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td align='center'><font class='mainCharacter'>Mise à jour du modem</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>
+            <script language="javascript">
+<!-- hide
+document.write(msg[getMsgIndex()]);
+// done hiding -->
+            </script>
+            </td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+            </table>
+            <br>
+            <table width='597'><tr><td align='center'> 
+            <input type='button' class='but' onClick='btnBack()' value='Précédent'>
+            </td></tr></table>
+      </blockquote>
+   </body>
+</html>

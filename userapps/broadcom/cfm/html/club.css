@@ -1,0 +1,99 @@
+.mainTitle  {
+   color: #afb3b5; 
+   font-size: 25pt; 
+   font-family: "Verdana"; 
+   font-weight: bolder;
+}
+
+.mainCharacter {
+   color: #ffffff; 
+   font-size: 11pt; 
+   font-family: "Verdana"; 
+   font-weight: bold;
+}
+
+.content1  {
+   color: #000000;
+   font-size: 10pt; 
+   font-family: "Verdana"; 
+   font-weight: normal;
+}
+
+.content2  {
+   color: #e1007c; 
+   font-size: 10pt; 
+   font-family: "Verdana"; 
+   font-weight: normal;
+}
+
+.content3  {
+   color: #000000;
+   background-color: #e0e0e0;
+   font-size: 8pt;
+   font-family: "Verdana";
+   font-weight: bold;
+}
+
+.content4  {
+   color: #000000; 
+   font-size: 10pt; 
+   font-family: "Verdana"; 
+   font-weight: bold;
+}
+
+.content5 {
+   color: #000000;
+   font-size: 10pt;
+   font-family: "Verdana";
+   font-weight: normal;
+   background-color: #ffffff;  
+}
+
+.hlink {
+   font-size: 8pt;
+   font-family: "Verdana";
+   font-weight: normal;
+}
+
+.diag1 {
+   color: #ff9900;
+   font-size: 8pt;
+   font-family: "Verdana";
+   font-weight: normal;
+}
+
+.diag2 {
+   color: green;
+   font-size: 8pt;
+   font-family: "Verdana";
+   font-weight: normal;
+}
+
+.diag3 {
+   color: red;
+   font-size: 8pt;
+   font-family: "Verdana";
+   font-weight: normal;
+}
+
+.but {
+   font-family: "Verdana"; 
+   font-size:12px;
+   background-color: #E2007A;
+   color: #ffffff; 
+   font-weight: bold;
+}
+
+.mainChar  {
+   color: #676767; 
+   font-size: 9pt; 
+   font-family: "Verdana"; 
+   font-weight: bold; 
+   cursor: hand; 
+   text-decoration: none; 
+   text-align: left;
+}
+
+.mainMenuBody {
+   background: #f3f3f3 none;
+}

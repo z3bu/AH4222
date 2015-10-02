@@ -1,0 +1,263 @@
+<html>
+   <head>
+      <meta http-equiv='Pragma' content='no-cache'>
+      <meta http-equiv="refresh" content="15">
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function frmLoad() {
+   var update = '<%ejFncCmd(stsadslupdate)%>';
+   var errMsg = '<%ejGetOther(memInfo, errMsg)%>';
+   
+   if ( errMsg != '&nbsp' )
+   {
+      if (isNetscape())
+         eval('location.replace("statsadslerr.html")');
+      else
+         eval('location.assign("statsadslerr.html")');
+   }
+}
+
+function btnBerTest() {
+   var options;
+
+   options = 'menubar=no,resizable=no,scrollbars=yes,titlebar=yes,toolbar=no,width=400,height=300';
+
+   window.open('berstart.tst?berState=0', 'BCM96345BerTest', options);
+}
+
+function btnReset() {
+   var loc = 'statsadslreset.html';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function btnClose() {
+   window.close();
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <!--<font class='mainTitle'>INFORMATIONS MODEM</font>-->
+            <img src='titres/titre_infos.gif' width='300' height='25'>
+               <hr color='#afb3b5' size='4' align='left' width='597'>
+                  <table border='0' cellpadding='3' cellspacing='0' width='597'>
+                     <tr bgcolor='#e2007a' height='20'><td align='left'>
+                        <font class='mainCharacter'>Statistiques ADSL </font>
+                     </td></tr>
+                  </table><br>
+            <table border="1" cellpadding="4" cellspacing="0">
+               <tr>
+                  <td colspan="2" class='content3'>Mode :</td>
+                  <td><%ejGetOther(stsadslget, 5, 1)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td colspan="2" class='content3'>Type :</td>
+                  <script language="javascript">
+<!-- hide 
+{
+   var mode = '<%ejGetOther(stsadslget, 5, 1)%>';
+   if (mode != '&nbsp' && (mode == 'ADSL2' || mode == 'ADSL2+')) 
+      document.writeln("<td>&nbsp;</td>");
+   else               
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 0)%>&nbsp;</td>");
+}
+// done hiding -->
+</script>
+               </tr>
+               <tr>
+                  <td colspan="2" class='content3'>Line Coding:</td>
+                  <td><%ejGetOther(stsadslget, 5, 2)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td colspan="2" class='content3'>Status:</td>
+                  <td><%ejGetOther(stsadslget, 1, 2)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td colspan="2" class='content3'>Link Power State:</td>
+                  <td><%ejGetOther(stsadslget, 1, 5)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td colspan="3">&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>&nbsp;</td>
+                  <td class='content3'>Downstream</td>
+                  <td class='content3'>Upstream</td>
+               </tr>
+               <tr>
+                  <td class='content3'>SNR Margin (dB):</td>
+                  <td><%ejGetOther(stsadslget, 1, 0)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 8, 0)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Attenuation (dB):</td>
+                  <td><%ejGetOther(stsadslget, 1, 1)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 8, 1)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Output Power (dBm):</td>
+                  <td><%ejGetOther(stsadslget, 1, 3)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 8, 3)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'><nobreak>Attainable Rate (Kbps):</nobreak></td>
+                  <td><%ejGetOther(stsadslget, 1, 4)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 8, 4)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Rate (Kbps):</td>
+                  <td><%ejGetOther(lineRate, 1)%>&nbsp;</td>
+                  <td><%ejGetOther(lineRate, 0)%>&nbsp;</td>
+               </tr>
+               <script language="javascript">
+<!-- hide 
+{
+   var mode = '<%ejGetOther(stsadslget, 5, 1)%>';
+   
+   if (mode != '&nbsp' && (mode == 'ADSL2' || mode == 'ADSL2+')) {
+      document.writeln("<tr><td class='content3'><nobreak>MSGc (number of bytes in overhead channel message):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 0)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 1)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>B (number of bytes in Mux Data Frame):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 2)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 3)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>M (number of Mux Data Frames in FEC Data Frame):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 4)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 5)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>T (Mux Data Frames over sync bytes):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 6)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 7)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>R (number of check bytes in FEC Data Frame):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 8)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 9)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>S (ratio of FEC over PMD Data Frame length):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 10)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 11)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>L (number of bits in PMD Data Frame):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 12)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 13)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>D (interleaver depth):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 14)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 10, 15)%>&nbsp;</td></tr>");
+   }
+   else if (mode != '&nbsp') {
+      document.writeln("<tr><td class='content3'><nobreak>K (number of bytes in DMT frame):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 3)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 7)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>R (number of check bytes in RS code word):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 5)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 9)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>S (RS code word size in DMT frame):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 4)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 8)%>&nbsp;</td></tr>");
+      document.writeln("<tr><td class='content3'><nobreak>D (interleaver depth):</nobreak></td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 6)%>&nbsp;</td>");
+      document.writeln("<td><%ejGetOther(stsadslget, 5, 10)%>&nbsp;</td></tr>");
+   }    
+}
+// done hiding -->
+</script>
+               <tr>
+                  <td colspan="3">&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Super Frames:</td>
+                  <td><%ejGetOther(stsadslget, 6, 3)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 6, 8)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Super Frame Errors:</td>
+                  <td><%ejGetOther(stsadslget, 6, 4)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 6, 9)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>RS Words:</td>
+                  <td><%ejGetOther(stsadslget, 6, 0)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 6, 5)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>RS Correctable Errors:</td>
+                  <td><%ejGetOther(stsadslget, 6, 1)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 6, 6)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>RS Uncorrectable Errors:</td>
+                  <td><%ejGetOther(stsadslget, 6, 2)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 6, 7)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td colspan="3">&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>HEC Errors:</td>
+                  <td><%ejGetOther(stsadslget, 7, 0)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 7, 4)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>OCD Errors:</td>
+                  <td><%ejGetOther(stsadslget, 7, 1)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 7, 5)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>LCD Errors:</td>
+                  <td><%ejGetOther(stsadslget, 7, 2)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 7, 6)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Total Cells:</td>
+                  <td><%ejGetOther(stsadslget, 7, 8)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 7, 11)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Data Cells:</td>
+                  <td><%ejGetOther(stsadslget, 7, 9)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 7, 12)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Bit Errors:</td>
+                  <td><%ejGetOther(stsadslget, 7, 10)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 7, 13)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td colspan="3">&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Total ES:</td>
+                  <td><%ejGetOther(stsadslget, 9, 0)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 9, 3)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Total SES:</td>
+                  <td><%ejGetOther(stsadslget, 9, 1)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 9, 4)%>&nbsp;</td>
+               </tr>
+               <tr>
+                  <td class='content3'>Total UAS:</td>
+                  <td><%ejGetOther(stsadslget, 9, 2)%>&nbsp;</td>
+                  <td><%ejGetOther(stsadslget, 9, 5)%>&nbsp;</td>
+               </tr>
+            </table>
+            <br><br>
+            <table width='597'><tr><td align='center'>
+            <!--<input type='button' onClick='btnBerTest()' class='but' value="Test ADSL/BER(fr&eacute;quence d'erreur en bits)">-->
+            <img border='0' onClick='btnBerTest()' src='button/btn_test_adsl_on.gif' hspace='6' vspace='6' width='300' height='25' style="CURSOR: hand">
+            <!--<input type='button' onClick='btnReset()' class='but' value='R&eacute;initialiser les statistiques'>-->
+            <img border='0' onClick='btnReset()' src='button/btn_reinitialiser_on.gif' hspace='6' vspace='6' width='200' height='25' style="CURSOR: hand">
+            </table>
+         </form>
+      </blockquote>
+   </body>
+</html>

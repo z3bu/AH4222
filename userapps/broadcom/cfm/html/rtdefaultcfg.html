@@ -1,0 +1,324 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var gtwyMem = '<%ejGet(defaultGateway)%>';
+var gtwyIfc = '<%ejGetOther(sysInfo, dfltGwIfc)%>';
+if ( gtwyIfc == '&nbsp' ) gtwyIfc = '';
+var gtwy = '<%ejGetOther(sysInfo, dfltGw)%>';
+if ( gtwy == '&nbsp' ) gtwy = '';
+var enblAuto = '<%ejGet(enblAuto)%>';
+var ipExt = '<%ejGetOther(sysInfo, pppIpExtension)%>';
+var user = '<%ejGet(curUserName)%>';
+
+function hideGWInfo(hide) {
+   var status = 'visible';
+
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('gwInfo').style.visibility = status;
+   else {
+      if (document.layers == false) // IE4
+         document.all.gwInfo.style.visibility = status;
+   }
+
+   if (hide == 1)
+   {
+       document.getElementById('part1').style.visibility = 'visible';
+       document.getElementById('title1').style.visibility = 'visible';
+       document.getElementById('part2').style.visibility = 'hidden';
+       document.getElementById('title2').style.visibility = 'hidden';
+   }
+   else
+   {
+       document.getElementById('part2').style.visibility = 'visible';
+       document.getElementById('title2').style.visibility = 'visible';
+       document.getElementById('part1').style.visibility = 'hidden'; 
+       document.getElementById('title1').style.visibility = 'hidden';  
+   }
+
+   if (hide == 0) {
+      with ( document.forms[0] ) {
+         if ( isValidIpAddress(gtwy) == true ) {
+            gwStr.checked = true;
+            dstGtwy.value = gtwy;
+         } else {
+            gwStr.checked = false;
+            dstGtwy.value = '';
+         }
+         if ( gtwyIfc != '' )
+            ifStr.checked = true;
+         else
+            ifStr.checked = false;
+      }
+   }
+}
+
+
+function gwClick(cb) {
+   if (cb.checked == true)
+      hideGWInfo(1);
+   else
+      hideGWInfo(0);
+   move_position();
+}
+
+function btnApply() {
+   var loc = 'rtdefaultcfg.cgi?';
+
+   with ( document.forms[0] ) {
+      if (enableAuto.checked == false && gwStr.checked == false && ifStr.checked == false) {
+         alert('Une passerelle par défaut doit être sélectionnée.');
+         return;
+      }
+      if (enableAuto.checked == true) {
+         loc += 'enblAuto=1';
+      }
+      else {
+         loc += 'enblAuto=0';
+         if (gwStr.checked == true ) {
+            if ( isValidIpAddress(dstGtwy.value) == false ) {
+               alert("La configuration de la passerelle par défaut a échouée à cause d'un paramètre incorrect ou d'une rupture de connexion.");
+               return;
+            }
+            loc += '&defaultGateway=' + dstGtwy.value;
+         }
+         else
+            loc += '&defaultGateway=' + '0.0.0.0';
+         if (ifStr.checked == true) {
+            var idx = wanIf.selectedIndex;
+            var ifc = wanIf.options[idx].value;
+            // if chosen interface is MER but does not specify static IP address then display error
+            if ( ifc.indexOf('nas_') != -1 && gwStr.checked == false ) {
+               alert('L’adresse IP de la passerelle par défaut doit être renseignée lorsque le type de connexion MER est sélectionné.');
+               return;
+            }
+            loc += '&wanIfName=' + ifc;
+         }
+         else
+            loc += '&wanIfName=' + '';
+      }
+   }
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      if (enblAuto == 1) {
+         enableAuto.checked = true;
+         hideGWInfo(1);
+      } else {
+         enableAuto.checked = false;
+         hideGWInfo(0);
+      }
+   }
+   move_position();
+}
+
+function move_position()
+{
+   var gwInfo_sta = document.getElementById('gwInfo').style.visibility;
+   var first_sta = document.getElementById('part1').style.visibility;
+   var second_sta = document.getElementById('part2').style.visibility;
+   var tifirst_sta = document.getElementById('title1').style.visibility;
+   var tisecond_sta = document.getElementById('title2').style.visibility;
+
+   
+   if(gwInfo_sta == 'hidden')
+   {
+      document.getElementById('gwInfo').style.position = 'absolute';
+      document.getElementById('gwInfo').style.top = '-1000';
+      document.getElementById('gwInfo').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('gwInfo').style.position = 'static';
+      document.getElementById('gwInfo').style.top = '0';
+      document.getElementById('gwInfo').style.top = '0';   
+   }
+   
+   if(first_sta == 'hidden')
+   {
+      document.getElementById('part1').style.position = 'absolute';
+      document.getElementById('part1').style.top = '-1000';
+      document.getElementById('part1').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('part1').style.position = 'static';
+      document.getElementById('part1').style.top = '0';
+      document.getElementById('part1').style.top = '0';   
+   }
+   
+   if(second_sta == 'hidden')
+   {
+      document.getElementById('part2').style.position = 'absolute';
+      document.getElementById('part2').style.top = '-1000';
+      document.getElementById('part2').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('part2').style.position = 'static';
+      document.getElementById('part2').style.top = '0';
+      document.getElementById('part2').style.top = '0';   
+   }
+   
+   if(tifirst_sta == 'hidden')
+   {
+      document.getElementById('title1').style.position = 'absolute';
+      document.getElementById('title1').style.top = '-1000';
+      document.getElementById('title1').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('title1').style.position = 'static';
+      document.getElementById('title1').style.top = '0';
+      document.getElementById('title1').style.top = '0';
+   }
+
+   if(tisecond_sta == 'hidden')
+   {
+      document.getElementById('title2').style.position = 'absolute';
+      document.getElementById('title2').style.top = '-1000';
+      document.getElementById('title2').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('title2').style.position = 'static';
+      document.getElementById('title2').style.top = '0';
+      document.getElementById('title2').style.top = '0';
+   }
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <div id="title1">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="20"><td nowrap><font class="mainCharacter">Routage - Passerelle par défaut</font></td></tr></table>
+            </div>
+            <div id="title2">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="20"><td nowrap><font class="mainCharacter">Routage - Configuration de votre Passerelle</font></td></tr></table>
+            </div>            
+            <div id='part1'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+<script language='javascript'>
+if(user=='root')
+{
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>En cochant la case ci-dessous, une passerelle par défaut sera attribuée au modem.</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cliquer sur « Sauver/Appliquer » et redémarrer votre modem pour que le paramètre soit pris en compte</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'><b>NB:</b> Si vous décochez cette case, configurez  vous-même la passerelle et/ou les paramètres de l’interface WAN</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>");
+}
+else
+{
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>En cochant la case ci-dessous, une passerelle par défaut sera attribuée au modem.</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'><b>NB:</b> Si vous décochez cette case, configurez vous-même la passerelle et/ou les paramètres de l’interface WAN.</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'><b>Remarque:</b></td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Vous devez adopter le profil Expert pour pouvoir modifier ce paramètre.</td></tr>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>");
+}
+</script>
+            </table>
+            </div>
+            <div id='part2'>        
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Pour configurer vous-même la passerelle:</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>1. Saisir l’adresse IP de la passerelle.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'><b>NB:</b> L’adresse IP de la passerelle par défaut est renseignée.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>2. Sélectionner l’interface WAN.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'><b>NB:</b>  L’interface WAN de la passerelle par défaut est renseignée</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Sinon, cocher la première case pour réactiver la passerelle par défaut.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            </table>   
+            </div>
+<script language='javascript'>
+if(user=='root')
+{
+   document.writeln("<table border='0' cellpadding='3' cellspacing='0' width='597'>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' valign='center' align='middle' width='30' height='30'>");
+   document.writeln("<input type='checkbox' name='enableAuto' onclick='gwClick(this)'></td>");
+   document.writeln("<td class='content1'>Activer la passerelle par défaut attribuée automatiquement</td></tr>");
+   document.writeln("</table>");
+}
+else
+{
+   document.writeln("<table border='0' cellpadding='3' cellspacing='0' width='597'>");
+   document.writeln("<tr bgcolor='#f2f2f2'><td class='content1' valign='center' align='middle' width='30' height='30'>");
+   document.writeln("<input type='checkbox' name='enableAuto'></td>");
+   document.writeln("<td class='content1'>Activer la passerelle par défaut attribuée automatiquement</td></tr>");
+   document.writeln("</table>");
+}
+</script>
+            <div id='gwInfo'>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1"><input type="checkbox" name='gwStr'>&nbsp;Adresse IP de la passerelle</td>
+               <td><input type='text' name='dstGtwy'></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1"><input type="checkbox" name='ifStr'>&nbsp;Sélectionner l'interface WAN</td>  
+               <td><select name='wanIf'>
+                  <script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var interfaceInfo = '<%ejGetOther(wanInterfaceInfo, route)%>';
+   var interfaces = interfaceInfo.split('|');
+   
+   for ( i = 0; i < interfaces.length; i++ ) {
+      var names = interfaces[i].split('/');
+      if ( names[1] == gtwyIfc )
+         document.write("  <option value='" + names[1] + "' selected>");
+      else
+         document.write("  <option value='" + names[1] + "'>");
+      document.writeln(interfaces[i]);
+   }
+   if (gtwyIfc == 'br0')
+      document.writeln("  <option value='br0' selected> LAN/br0");
+   else
+      document.writeln("  <option value='br0'> LAN/br0");
+}
+// done hiding -->
+</script>
+                        </select></td></tr>
+               </table>
+            </div>
+            <br>
+            <table width='597'><tr><td align='center'>
+<script language='javascript'>
+if(user=='root')
+{
+document.writeln("<img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style='CURSOR: hand'>");
+}
+</script>
+           </td></tr></table>
+            <!--<center>
+               <input type='button' onClick='btnApply()' value='Save/Apply'>   
+            </center>-->
+         </form>
+      </blockquote>
+   </body>
+</html>

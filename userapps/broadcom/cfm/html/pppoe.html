@@ -1,0 +1,314 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel='stylesheet' href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var timeOut = '<%ejGet(pppTimeOut)%>';
+var onDemand = '<%ejGet(enblOnDemand)%>';
+var ipExtension = '<%ejGet(pppIpExtension)%>';
+var authMethod = '<%ejGet(pppAuthMethod)%>';
+var qs = '<%ejGet(quickSetup)%>';
+var auto = '<%ejGet(enblAutoScan)%>';
+var prtcl = '<%ejGetOther(memInfo, ntwkPrtcl)%>';
+var pppPasswordChanged = false;
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      if (qs == '1')
+         showPppoe(auto);
+      else
+         showPppoe(0);
+      if ( onDemand == '1' ) {
+         enblOnDemand.checked = true;
+         hideInfo(0);
+      } else {
+         enblOnDemand.checked = false;
+         hideInfo(1);
+      }
+      
+      if ( ipExtension == '1' )
+         pppIpExtension.checked = true;
+      else
+         pppIpExtension.checked = false;
+      
+      if ( authMethod == '1' )
+         pppAuthMethod.selectedIndex = 2;
+      else if ( authMethod == '2' )
+         pppAuthMethod.selectedIndex = 3;
+      else if ( authMethod == '3' )
+         pppAuthMethod.selectedIndex = 4;
+      else
+         pppAuthMethod.selectedIndex = 1;
+
+      pppUserName.value = '<%ejGet(pppUserName)%>';
+      pppPassword.value = 'secret';
+      pppTimeOut.value = timeOut;
+      if ( prtcl == 'PPPoE' )
+         pppServerName.value = '<%ejGet(pppServerName)%>';
+   }
+   move_position();
+}
+
+function btnNext() {
+   var loc = 'enblservice.cgi?';
+
+   with ( document.forms[0] ) {
+      // validate user name
+      var len = pppUserName.value.length;
+      if ( len > 256 ) {
+         msg = "La longueur du nom d'utilisateur (" + len + ") est supérieure à la longueur autorisée [0-256].";
+         alert(msg);
+         return;
+      }
+      // validate password
+      len = pppPassword.value.length;
+      if ( len > 32 ) {
+         msg = 'La longueur du mot de passe (' + len + ') est supérieure à la longueur autorisée[0-32].';
+         alert(msg);
+         return;
+      }
+      // validate inactivity timeout
+      if ( enblOnDemand.checked == true ) {
+         if ( isNaN(parseInt(pppTimeOut.value)) == true ) {
+            //msg = 'Le temps mort d’inactivité  "' + pppTimeOut.value + '" doit être compris entre.';
+            msg = "Le temps mort d'inactivité \"" + pppTimeOut.value + "\" doit être compris entre [1-4320]";
+            alert(msg);
+            return;
+         }
+         timeOutNum = parseInt(pppTimeOut.value);
+         if ( timeOutNum < 1 || timeOutNum > 4320 ) {
+            msg = 'Le temps mort d’inactivité  "' + pppTimeOut.value + '" doit être compris entre [1-4320].';
+            alert(msg);
+            return;
+         }
+      }
+      // validate authentication method
+      if ( pppAuthMethod.selectedIndex == 0 ) {
+         msg = "La méthode d'authentification n’a pas été sélectionnée.";
+         alert(msg);
+         return;
+      }
+      // validate server name
+      if ( prtcl == 'PPPoE' ) {
+         len = pppServerName.value.length;
+         if ( len > 32 ) {
+            msg = 'La longueur du service PPP (' + len + ') est supérieure à la longueur autorisée [0-32].';
+            alert(msg);
+            return;
+         }
+      }
+
+      if ( qs == '1' ) {
+         if ( auto == '1' )
+            loc = 'pppauthinfo.cgi?';
+      } else
+         loc = 'enblservice.cgi?';
+
+      loc += 'pppUserName=' + encodeUrl(pppUserName.value);
+      if (pppPasswordChanged == true) {
+         loc += '&pppPassword=' + encodeUrl(pppPassword.value);
+      }
+      if ( enblOnDemand.checked == true ) {
+         loc += '&enblOnDemand=1';
+         loc += '&pppTimeOut=' + timeOutNum;
+      } else {
+         loc += '&enblOnDemand=0';
+         loc += '&pppTimeOut=' + timeOut;
+      }
+      if ( pppIpExtension.checked == true )
+         loc += '&pppIpExtension=1&enblNat=0&enblFirewall=0';
+      else
+         loc += '&pppIpExtension=0&enblFirewall=0&enblNat=1';
+
+      var idx = pppAuthMethod.selectedIndex;
+      loc += '&pppAuthMethod=' + pppAuthMethod.options[idx].value;
+      if ( prtcl == 'PPPoE' )
+         loc += '&pppServerName=' + encodeUrl(pppServerName.value);
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function btnBack() {
+   var loc = 'ntwkprtcl.html';
+   //if ( qs == '1' && auto == '1' )
+   //   loc = 'vpivci.html';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+
+function showPppoe(show) {
+   var status = 'visible';
+   if ( show == 0 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('pppoeSN').style.visibility = status;
+   else
+      document.all.pppoeSN.style.visibility = status;
+   move_position();
+}
+
+function hideInfo(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('pppInfo').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         if ( hide == 1 )
+            document.forms[0].pppTimeOut.value = '';
+         else
+            document.forms[0].pppTimeOut.value = '<%ejGet(pppTimeOut)%>';
+      } else  // IE 4
+         document.all.pppInfo.style.visibility = status;
+   }
+   move_position();
+}
+
+function cbClick(cb) {
+   if ( cb.checked == true )
+      hideInfo(0);
+   else
+      hideInfo(1);
+}
+
+function pwChange(ppppw) {
+   pppPasswordChanged = true;
+}
+
+function move_position()
+{
+   var pppoe_sta = document.getElementById('pppoeSN').style.visibility;
+   var ppp_sta = document.getElementById('pppInfo').style.visibility;
+   
+   if(pppoe_sta == 'hidden')
+   {
+      document.getElementById('pppoeSN').style.position = 'absolute';
+      document.getElementById('pppoeSN').style.top = '-1000';
+      document.getElementById('pppoeSN').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('pppoeSN').style.position = 'static';
+      document.getElementById('pppoeSN').style.top = '0';
+      document.getElementById('pppoeSN').style.top = '0';   
+   }
+   
+   if(ppp_sta == 'hidden')
+   {
+      document.getElementById('pppInfo').style.position = 'absolute';
+      document.getElementById('pppInfo').style.top = '-1000';
+      document.getElementById('pppInfo').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('pppInfo').style.position = 'static';
+      document.getElementById('pppInfo').style.top = '0';
+      document.getElementById('pppInfo').style.top = '0';   
+   }
+}
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <!--<font class="mainTitle">CONFIGURATION AVANC&Eacute;E</font>-->
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+               <tr bgcolor="#e2007a" height="17"><td colspan='2'><font class="mainCharacter">RESEAU DISTANT (WAN)</font></td></tr>
+               <tr bgcolor="#f2f2f2"><td>&nbsp;</td></tr>
+               <tr bgcolor="#f2f2f2"><td><font class="content1"><b>Nom d'utilisateur et mot de passe</b></font></td></tr>
+               <tr bgcolor="#f2f2f2"><td><font class="content1">
+               Dans les cases ci-dessous, veuillez entrer le nom d’utilisateur et le mot de passe qui vous ont été fournis par Club Internet.
+               </font></td></tr>
+               <tr bgcolor="#f2f2f2"><td>&nbsp;</td></tr>
+               <tr bgcolor="#f2f2f2"><td><font class="content1">
+Inscrivez votre login Club Internet en lettres minuscules en mettant bien « @clubadsl1 » à la fin de celui-ci. (Par exemple si votre login (nom d’utilisateur) est jdupont, il faut inscrire jdupont@clubadsl1).
+               </font></td></tr>
+            </table>
+            <div id='pppoeSN'>
+               <table border="0" cellpadding="3" cellspacing="0" width="597">
+                  <tr bgcolor="#f2f2f2">
+                     <td width="150">PPPOE Service Name:</td>
+                     <td>
+                        <b><%ejGetOther(memInfo, pppoeServiceName)%></b>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+               <tr bgcolor="#f2f2f2">
+                  <td class="content1">Nom d'utilisateur:&nbsp;&nbsp;</td>
+                  <td><input type='text' name='pppUserName' size="48" maxlength="64"></td>                  
+               </tr>
+               <tr bgcolor="#f2f2f2">
+                  <td class="content1">Mot de passe:&nbsp;&nbsp;</td>
+                  <td><input type='password' name='pppPassword' size="48" maxlength="32" onChange='pwChange(this)'></td>
+               </tr>
+<script language="javascript">
+<!-- hide
+if ( prtcl == 'PPPoE' ) {
+   document.writeln("               <tr bgcolor='#f2f2f2'>");
+   document.writeln("                  <td class='content1'>Nom du service pppoe:&nbsp;&nbsp;</td>");
+   document.writeln("                  <td><input type='text' name='pppServerName'></td>");
+   document.writeln("               </tr>");
+}
+// done hiding -->
+</script>
+               <tr bgcolor="#f2f2f2">
+                  <td class="content1">M&eacute;thode d'authentification:&nbsp;&nbsp;</td>
+                  <td class="content1"><select name='pppAuthMethod' size="1">
+                        <option value="-1">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <option value="0">AUTO
+                        <option value="1">PAP
+                        <option value="2">CHAP
+                        <option value="3">MSCHAP
+                     </select></td>
+               </tr>
+            </table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+               <tr bgcolor="#f2f2f2"><td class="content1" colspan="2">&nbsp;</td></tr>
+               <tr bgcolor="#f2f2f2"><td width='30' height="30"><input type='checkbox' name='enblOnDemand' onClick='cbClick(this)'></td>
+                   <td class='content1'>Connexion &agrave; la demande (avec compteur de temps mort)</td></tr>
+            </table>
+            <div id='pppInfo'>
+               <table border="0" cellpadding="3" cellspacing="0" width="597">
+                  <tr bgcolor="#f2f2f2">
+                     <td class="content1">Temps mort d’inactivité (minutes) (1-4320):&nbsp;&nbsp;</td>
+                     <td><input type='text' name='pppTimeOut'></td>
+                  </tr>
+               </table>
+             </div>
+             <table border="0" cellpadding="3" cellspacing="0" width="597">
+                <tr bgcolor="#f2f2f2"><td class="content1" colspan="2">&nbsp;</td></tr>
+                <tr bgcolor="#f2f2f2">
+                   <td width='30' height="30"><input type='checkbox' name='pppIpExtension'></td>
+                   <td class='content1'>Extension PPP IP</td>
+                </tr>
+                <tr bgcolor="#f2f2f2"><td class="content1" colspan="2">&nbsp;</td></tr>
+             </table>
+             <table width='597'><tr><td align='center'> 
+               <!--<input type='button' class='but' onClick='btnBack()' value='Retour'> <input type='button' class='but' onClick='btnNext()' value='Suivant'>-->
+               <img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style="CURSOR: hand">&nbsp;&nbsp;<img border='0' onClick='btnNext()' src='button/btn_suivant_on.gif' hspace='6' vspace='6' width='100' height='23' style="CURSOR: hand">
+            </td></tr></table>
+         </form>
+      </blockquote>
+   </body>
+</html>

@@ -1,0 +1,170 @@
+<html>
+   <head>
+      <meta http-equiv='Pragma' content='no-cache'>
+      <meta http-equiv="refresh" content="15">
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <style type='text/css'>
+         .mainTitle  {color: #afb3b5; font-size: 25pt; font-family: 'Helvetica'; font-weight: bolder}
+         .mainCharacter {color: #ffffff; font-size: 11pt; font-family: 'Verdana'; font-weight: bolder}
+         .content1  {color: #000000; background-color: #e0e0e0; font-size: 10pt; font-family: 'Verdana'; font-weight: normal}
+         </style>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function frmLoad() {
+   var update = '<%ejFncCmd(stsatmupdate)%>';
+}
+
+function btnReset() {
+   var loc = 'statsatmreset.html';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <center><form>
+            <!--<font class='mainTitle'>INFORMATIONS MODEM</font>-->
+            <img src='titres/titre_infos.gif' width='300' height='25'>
+               <table border='0' cellpadding='3' cellspacing='0' width='597'>
+               <tr><td><hr color='#afb3b5' size='4' align='left'></td></tr>
+               <tr bgcolor='#e2007a' height='20'><td align='left'><font class='mainCharacter'>Statistiques ATM </font></td></tr>
+               <tr><td>
+               <table border="1" cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td colspan="2" class='content1'><center><b>Statistiques de l'interface ATM:</b></center>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Octets reçus:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 0)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Octets Transmis:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 1)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 2)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Cellules non reconnues reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 3)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de type HEC reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 4)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs VPI/VCI incorrectes reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 5)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs reçues sur des ports non activés:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 6)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de type PTI reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 7)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Cellules inactives reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 8)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de types de circuit reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 9)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de type CRC RM OAM reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 10)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de type GFC reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 0, 11)%></td>
+                  </tr>
+                  <tr>
+                     <td colspan="2">&nbsp;</td>
+                  </tr>
+                  <tr>
+                     <td colspan="2" class='content1'><center><b>Statiques de l'interface AAL5:</b></center>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Octets reçus:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 0)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Octets Transmis:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 1)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Paquets unicast reçus:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 2)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Paquets unicast transmis:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 3)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs reçues:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 4)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs transmises:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 5)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Rejets reçus:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 6)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Rejets transmis:</td>
+                     <td><%ejGetOther(stsatmifc, 1, 7)%></td>
+                  </tr>
+                  <tr>
+                     <td colspan="2">&nbsp;</td>
+                  </tr>
+                  <tr>
+                     <td colspan="2" class='content1'><center><b>Statiques des canaux virtuels AAL5:</b></center>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs CRC:</td>
+                     <td><%ejGetOther(stsatmvcc, 0, 0)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>SAR (temps dépassé):</td>
+                     <td><%ejGetOther(stsatmvcc, 0, 1)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>SDU (taille trop importante):</td>
+                     <td><%ejGetOther(stsatmvcc, 0, 2)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de petits paquets:</td>
+                     <td><%ejGetOther(stsatmvcc, 0, 3)%></td>
+                  </tr>
+                  <tr>
+                     <td class='content1'>Erreurs de longueur:</td>
+                     <td><%ejGetOther(stsatmvcc, 0, 4)%></td>
+                  </tr>
+               </table>
+               </td></tr>
+               <tr><td align='center'>
+                  <input type='button' onClick='btnReset()' value='Reset'> <input type='button' onClick='window.close()' value='Close'>
+               </td></tr></table>
+            </form>
+         </center>
+      </blockquote>
+   </body>
+</html>

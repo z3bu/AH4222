@@ -1,0 +1,239 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel='stylesheet' href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var addr = '<%ejGet(logIpAddress)%>';
+var port = '<%ejGet(logPort)%>';
+
+function getLogPort() {
+   var portNum = parseInt(port);
+   if ( isNaN(portNum) || portNum == 0 )
+      portNum = 514; // default system log server port is 514
+
+   return portNum;
+}
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      status[<%ejGet(logStatus)%>].checked = true;
+
+      levelLog.selectedIndex = <%ejGet(logLevel)%>;
+      levelDisplay.selectedIndex = <%ejGet(logDisplay)%>;
+
+      logMode.selectedIndex = <%ejGet(logMode)%> - 1;
+      if ( logMode.selectedIndex == 0 ) {
+         logAddr.value = '';
+         logPort.value = '';
+         hideInfo(1);
+      } else {
+         logAddr.value = addr;
+         logPort.value = getLogPort();
+         hideInfo(0);
+      }
+   }
+   move_position();
+}
+
+function btnApply() {
+   var loc = 'logintro.cgi?';
+   var idx, log, display, mode;
+
+   with ( document.forms[0] ) {
+      if ( status[0].checked == true ) {
+         var msg = 'Si vous sélectionnez "Désactivé", ';
+         msg += 'le journal du modem sera perdu. Si vous souhaitez le sauvegarder, cliquez sur  "Annuler". '; 
+         msg += "Revenir à la page d'accueil du Journal Système, "
+         msg += "Visualiser le journal système puis sauvegarder avec l'option \"Enregistrer sous\" du menu fichier.";
+         if ( confirm(msg) == false )
+            return;
+      }
+
+      if ( status[1].checked == true )
+         loc += 'logStatus=1';
+      else
+         loc += 'logStatus=0';
+      idx = levelLog.selectedIndex;
+      log = levelLog.options[idx].value;
+      idx = levelDisplay.selectedIndex;
+      display = levelDisplay.options[idx].value;
+      idx = logMode.selectedIndex;
+      mode = logMode.options[idx].value;
+      if ( mode == 1 ) {
+         valAddr = addr;
+         valPort = getLogPort();
+      } else {
+         if ( isValidIpAddress(logAddr.value) == false ) {
+            alert(" L'adresse IP du serveur est incorrecte.");
+            return;
+         }
+         if ( isValidPort(logPort.value) == false ) {
+            alert('Le port UDP du serveur "' + logPort.value + '" est incorrect.');
+            return;
+         }
+         valAddr = logAddr.value;
+         valPort = logPort.value;
+      }
+      loc += '&logLevel=' + log;
+      loc += '&logDisplay=' + display;
+      loc += '&logMode=' + mode;
+      loc += '&logIpAddress=' + valAddr;
+      loc += '&logPort=' + valPort;
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function hideInfo(hide) {
+   var status = 'visible';
+
+   if ( hide == 1 ) {
+      status = 'hidden';
+      document.forms[0].logAddr.value = '';
+      document.forms[0].logPort.value = '';
+   } else {
+      document.forms[0].logAddr.value = addr;
+      document.forms[0].logPort.value = getLogPort();
+   }
+
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('srvInfo').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         if ( hide == 1 ) {
+            document.forms[0].logAddr.value = '';
+            document.forms[0].logPort.value = '';
+         }
+      } else  // IE 4
+         document.all.srvInfo.style.visibility = status;
+   }
+   move_position();
+}
+
+function cbClick(obj) {
+   var idx = obj.selectedIndex;
+   var val = obj.options[idx].value;
+   if ( val == 1 )
+      hideInfo(1);
+   else
+      hideInfo(0);
+}
+
+function move_position()
+{
+   var srv_sta = document.getElementById('srvInfo').style.visibility;
+
+   if(srv_sta == 'hidden')
+   {
+      document.getElementById('srvInfo').style.position = 'absolute';
+      document.getElementById('srvInfo').style.top = '-1000';
+      document.getElementById('srvInfo').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('srvInfo').style.position = 'static';
+      document.getElementById('srvInfo').style.top = '0';
+      document.getElementById('srvInfo').style.top = '0';   
+   }
+}
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <img src='titres/titre_gestion.gif' width='270' height='25'><br>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Journal Système - Configuration</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>- Si le mode "Journal" est activé, le système enregistrera tous les événements sélectionnés.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>- Pour le niveau de "Journal", tous les événements au dessus ou égaux  au niveau sélectionné seront sauvegardés.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>- Pour le niveau d'affichage, tous les événements au dessus ou égaux au niveau sélectionné seront affichés.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>- Si le mode sélectionné est " Distant "ou "Les deux", les événements seront envoyés à l'adresse IP spécifiée et au port UDP du serveur du système " journal ". </td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>- Si le mode sélectionné est " local" ou "Les deux", les événements seront enregistrés sur la mémoire local.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>Sélectionner les valeurs souhaitées et cliquer sur " Sauvegarder/Appliquer" pour configurer les options du système « Journal ».</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'>
+                  <td class='content1' width='120'>Journal:</td>
+                  <td><input name='status' type='radio'>Désactivé </td>
+                  <td><input name='status' type='radio'>Activé </td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='120'>Niveau du Journal:</td>
+                  <td colspan="2"><select name='levelLog' size="1">
+                        <option value="0">
+                        Urgence
+                        <option value="1">
+                        Alerte
+                        <option value="2">
+                        Critique
+                        <option value="3">
+                        Erronée
+                        <option value="4">
+                        Avertissement
+                        <option value="5">
+                        Notification
+                        <option value="6">
+                        Informationnel
+                        <option value="7">
+                        Débogage
+                     </select></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='120'>Niveau d'affichage:</td>
+                  <td colspan="2"><select name='levelDisplay' size="1">
+                        <option value="0">
+                        Urgence
+                        <option value="1">
+                        Alerte
+                        <option value="2">
+                        Critique
+                        <option value="3">
+                        Erronée
+                        <option value="4">
+                        Avertissement
+                        <option value="5">
+                        Notification
+                        <option value="6">
+                        Informationnel
+                        <option value="7">
+                        Débogage
+                     </select></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='120'>Mode:</td>
+                  <td colspan="2"><select name='logMode' size="1" onClick='cbClick(this)'>
+                        <option value="1">
+                        Local
+                        <option value="2">
+                        Distant
+                        <option value="3">
+                        Les deux
+                     </select></td>    
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>&nbsp;</td></tr> 
+            </table>
+            <div id='srvInfo'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1'>Adresse IP du serveur:&nbsp;&nbsp;</td>
+               <td><input type='text' name='logAddr'></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>Port UDP du serveur:&nbsp;&nbsp;</td>
+               <td><input type='text' name='logPort'></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            </div>
+            <br>
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            <!--<p align="center">
+               <input type='button' onClick='btnApply()' value='Save/Apply'>-->
+         </form>
+      </blockquote>
+   </body>
+</html>

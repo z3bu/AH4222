@@ -1,0 +1,123 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+      <link rel='stylesheet' href='club.css' type='text/css'>  
+            <script language="javascript">
+<!-- hide
+
+var progress = 0;
+var update_flag = <%ejGet(upgrade_flag)%>;
+var AdslOn = '<%ejGetOther(stsadslget,5,1)%>';
+var WanIp = '<%ejGetOther(wanInterfaceInfo, wanip)%>';
+
+function isInProgress() 
+{
+   if ( progress == 0 )  
+   {
+      progress = 1;
+      return true;
+   }
+   else
+      //alert('La mise à jour du firmware est en cours. Merci de patienter.');
+      return false;
+}
+
+function btnTftp() {
+   var loc = 'tftp_get_fw.cmd?site=0';
+
+   if((AdslOn == '&nbsp') || (WanIp == ''))
+   {
+      alert('Connexion impossible au serveur de mise à jour, veuillez ré-essayer');
+      return;
+   }
+   if(update_flag == 1)
+      var code = 'location.assign("update_alert.cmd")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+function btnTftpConf() {
+   var loc = 'tftp_get_Conf.cmd?site=0';
+
+   if((AdslOn == '&nbsp') || (WanIp == ''))
+   {
+      alert('Connexion impossible au serveur de mise à jour, veuillez ré-essayer');
+      return;
+   }
+   if(update_flag == 1)
+      var code = 'location.assign("update_alert.cmd")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+function checkfs()
+{
+   var loc = 'upload.html';
+   var fn = document.getElementsByName('filename')[0].value;
+   var length = fn.length;
+
+   if((fn.charAt(length-4) == '.') && (fn.charAt(length-3) == 'b') && (fn.charAt(length-2) == 'i') && (fn.charAt(length-1) == 'n'))
+      document.FirmUpload.submit();
+   else
+   {
+      alert("Le fichier selectionné n'est pas un firmware valide");
+      var code = 'location.assign("' + loc + '")'; 
+      eval(code);
+      return false;
+   }
+}
+// done hiding -->
+</script>
+   </head>
+   <body>
+      <blockquote>
+         <form name='FirmUpload' method='post' ENCTYPE='multipart/form-data' action='upload.cgi' onSubmit='return isInProgress();'>
+            <img src='titres/titre_gestion.gif' width='270' height='25'><br>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Outils de mise à jour</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Etape 1:</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Obtenir le firmware de la part de Club Internet.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Etape 2:</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Entrer le chemin d'accès au firmware de mise à jour  ou cliquer sur le bouton  "Parcourir"  pour le localiser.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Etape 3:</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cliquer sur le bouton  "Mettre à jour le Firmware " pour télécharger une nouvelle image du  fichier.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'><b>Remarque :</b></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Le processus de mise à jour peut durer environ deux minutes, et votre modem redémarrera une fois le processus achevé.</td></tr>            
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>Nom du fichier:</td>
+               <td><input type='file' name='filename' size='15'></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            <table width='597'><tr><td align='center'>
+            <input type='button' class='but' value='Mettre à jour le Firmware' onClick='checkfs();'>
+            </td></tr></table>
+            <br><br><hr width='597' align='left'><br><br>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cliquer sur "Mise à jour du firmware à partir de Club Internet" pour vérifier qu'une nouvelle version du logiciel est disponible.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnTftp()' src='button/btn_maj_firmware_on.gif' hspace='6' vspace='6' width='350' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            <br><br><hr width='597' align='left'><br><br>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cliquer sur "Mise à jour de la configuration à partir de Club Internet" pour vérifier qu'une nouvelle version du logiciel est disponible.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table> 
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnTftpConf()' src='button/btn_maj_config_on.gif' hspace='6' vspace='6' width='370' height='23' style="CURSOR: hand">
+            </td></tr></table>
+         </form>
+      </blockquote>
+   </body>
+</html>

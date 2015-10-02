@@ -1,0 +1,100 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href="club.css" type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var service = '<%ejGet(serviceName)%>';
+var vpi = '<%ejGet(atmVpi)%>';
+var vci = '<%ejGet(atmVci)%>';
+var qs = '<%ejGet(quickSetup)%>';
+
+function btnNext() {
+   var loc = 'ntwksum2.cgi?';
+
+   if ( qs == '1' )
+      loc = 'lancfgbr.cgi?';
+
+   // protocol is bridge
+   loc += 'ntwkPrtcl=3';
+
+   with ( document.forms[0] ) {
+      len = serviceName.value.length;
+      if( serviceName.value == '')
+      {
+         alert('Merci de renseigner le nom de la connexion.');
+         return;
+      }
+      if ( len > 32 ) {
+         alert('La longueur du nom de la connexion (' + len + ') est supérieure à la longueur autorisée [0 - 32].');
+         return;
+      }
+      if ( enblService.checked == true )
+         loc += '&enblService=1';
+      else
+         loc += '&enblService=0';
+      loc += '&serviceName=' + encodeUrl(serviceName.value);
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+
+function btnBack() {
+   if (isNetscape())
+      var code = 'location.replace("' + 'ntwkprtcl.cgi' + '")';
+   else
+      var code = 'location.assign("' + 'ntwkprtcl.cgi' + '")';
+   eval(code);
+}
+
+function frmLoad() {
+   var enableService = '<%ejGet(enblService)%>';
+
+   with ( document.forms[0] ) {
+      if ( enableService == '1' )
+         enblService.checked = true;
+      else
+         enblService.checked = false;
+
+      if ( service == '' )
+         service = 'br_' + vpi + '_' + vci;
+      serviceName.value = service;
+   }
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="20"><td nowrap><font class="mainCharacter">RESEAU DISTANT(WAN)</font></td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'><b>D&eacute;cocher la case ci-dessous pour d&eacute;sactiver le service r&eacute;seau distant (WAN)</b></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;<input type='checkbox' name='enblService' checked>&nbsp;
+            Activer le service "Bridge"</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Nom de la connexion&nbsp;&nbsp;</td>
+            <td><input type="text" size='40' name="serviceName"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            </table>
+            <table width='597'><tr><td align='center'> 
+               <!--<input type='button' class='but' onClick='btnBack()' value='Retour'> <input type='button' class='but' onClick='btnNext()' value='Suivant'>-->
+               <img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style="CURSOR: hand">&nbsp;&nbsp;<img border='0' onClick='btnNext()' src='button/btn_suivant_on.gif' hspace='6' vspace='6' width='100' height='23' style="CURSOR: hand">
+           </tr></td></table> 
+         </form>
+      </blockquote>
+   </body>
+</html>

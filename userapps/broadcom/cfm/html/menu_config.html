@@ -1,0 +1,50 @@
+<html>
+<head>
+<html><head>
+<meta http-equiv='Pragma' content='no-cache'>
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+<script language='javascript' src='menuTree.js'></script>
+<script language='javascript' src='menuTitle.js'></script>
+<script language='javascript' src='menuBcm.js'></script>
+<script language='javascript'>
+function frmLoad()
+{
+  parent.preload('wancfg.cmd');
+}
+</script>
+<title></title>
+<base target="_self">
+</head>
+<body class='mainMenuBody' topmargin="0" leftmargin="0" marginwidth="0" marginheight="0"  onLoad='frmLoad()'>
+<table border="0" align="center" cellpadding="0" bordercolor='#afb3b5' cellspacing="1" width="150">
+  <tr>
+    <td class='menu' valign="top" align="middle">
+	<script language='javascript'>
+<!-- hide
+   var options = new Array('<%ejGet(curUserName)%>',
+                           '<%ejGetOther(sysInfo, adslStd)%>',
+                           '<%ejGetOther(sysInfo, noBrPrtcl)%>',
+                           '<%ejGetOther(sysInfo, enblFirewall)%>',
+                           '<%ejGetOther(sysInfo, enblNat)%>',
+                           '<%ejGetOther(sysInfo, pppIpExtension)%>',
+                           '<%ejGetOther(sysInfo, buildDdnsd)%>',
+                           '<%ejGetOther(sysInfo, buildEbTables)%>',
+                           '<%ejGetOther(sysInfo, brPrtcl)%>',
+                           '<%ejGetOther(sysInfo, buildToD)%>',
+                           '<%ejGetOther(sysInfo, buildSiproxd)%>',
+                           '<%ejGetOther(memInfo, isQosEnabled)%>',
+                           '<%ejGetOther(sysInfo, buildPortmap)%>',
+                           '<%ejGetOther(sysInfo, buildIpp)%>'
+                          );
+
+   createAdvSetupMenu(options);
+   initializeDocument();
+// done hiding -->
+    </script>
+<noscript>You must enable JavaScript in your browser.</noscript>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

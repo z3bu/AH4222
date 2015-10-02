@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel='stylesheet' href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function reboot() {
+   var enblPopWin = '<%ejGet(enblPopWin)%>';
+   var loc = 'main.html';
+   if (isNetscape())
+      var code = 'window.top.location.replace("' + loc + '")';
+   else
+      var code = 'window.top.location.assign("' + loc + '")';
+
+   if ( enblPopWin == '1' ) {
+      loc = 'index.html';
+      if (isNetscape())
+         code = 'location.replace("' + loc + '")';
+      else
+         code = 'location.assign("' + loc + '")';
+   }
+
+   eval(code);
+}
+
+function frmLoad() {
+   // only reboot if upload progress is successful
+   if ( getMsgIndex() == 0 )
+      setTimeout('reboot()', 40000);
+}
+
+function btnBack() {
+   if (isNetscape())
+      var code = 'location.replace("' + 'upload.cgi' + '")';
+   else
+      var code = 'location.assign("' + 'upload.cgi' + '")';
+
+   if (<%ejGet(glbUploadMode)%> == 2)
+   {
+      if (isNetscape())
+         code = 'location.replace("' + 'updatesettings.cgi' + '")';
+      else
+         code = 'location.assign("' + 'updatesettings.cgi' + '")';
+   }
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+            <img src='titres/titre_gestion.gif' width='270' height='25'><br>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td align='center'><font class='mainCharacter'>Mise à jour du modem</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>
+               Une mise à jour est en cours, veuillez patientez. Aucun autre processus de mise à jour n'est disponible !
+            </td></tr></table>
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style="CURSOR: hand">
+            </td></tr></table>
+   </body>
+</html>

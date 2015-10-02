@@ -1,0 +1,113 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href="club.css" type="text/css">
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function btnClear() {
+   with ( document.forms[0] ) {
+      dstAddr.value = '';
+      dstMask.value = '';
+      dstGtwy.value = '';
+   }
+}
+
+function btnApply() {
+   var loc = 'rtroutecfg.cmd?action=add';
+   with ( document.forms[0] ) {
+      if ( isValidIpAddress(dstAddr.value) == false ) {
+         alert('L’adresse IP de destination "' + dstAddr.value + '" est incorrecte.');
+         return;
+      }
+      if ( isValidIpAddress(dstMask.value) == false &&  dstMask.value != '255.255.255.255') {
+         alert('L’adresse IP du masque de sous réseau "' + dstMask.value + '" est incorrecte.');
+         return;
+      }
+      loc += '&dstAddr=' + dstAddr.value;
+      loc += '&dstMask=' + dstMask.value;
+      if (gwStr.checked == false && ifStr.checked == false) {
+         alert("Merci de sélectionner \" Utiliser l'adresse IP de la passerelle\". et/ou \".Interface WAN\".");
+         return;
+      }
+      if (gwStr.checked == true) {         
+         if ( isValidIpAddress(dstGtwy.value) == false ) {
+            alert('L’adresse IP de la passerelle par défaut "' + dstGtwy.value + '" est incorrecte.');
+            return;
+         }
+         loc += '&dstGtwy=' + dstGtwy.value;
+      } else
+         loc += '&dstGtwy=' + '0.0.0.0';
+      if (ifStr.checked == true) {
+         var idx = dstWanIf.selectedIndex;
+         var ifc = dstWanIf.options[idx].value;
+         // if chosen interface is MER but does not specify static IP address then display error
+         if ( ifc.indexOf('nas_') != -1 && gwStr.checked == false ) {
+            alert('L’adresse IP de la passerelle par défaut doit être renseignée lorsque le type de connexion MER est sélectionné.');
+            return;
+         }
+         loc += '&dstWanIf=' + ifc;
+      }
+      else
+         loc += '&dstWanIf=' + '';
+   }
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body>
+      <blockquote>
+         <form>
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Routage statique - Ajouter</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Entrer l'adresse réseau de destination, le masque de sous-réseau, la passerelle et/ou l'interface WAN disponible puis cliquer sur "Sauvegarder/appliquer" pour ajouter  les données à la table de routage.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='300'>Adresse  réseau de destination:</td><td><input type='text' name='dstAddr'></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='300'>Masque de sous-réseau:</td><td><input type='text' name='dstMask'></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='300'><input type="checkbox" name='gwStr'>&nbsp;Utiliser l'adresse IP de la passerelle</td>
+               <td><input type='text' name='dstGtwy'></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='300'><input type="checkbox" name='ifStr' checked>&nbsp;Interface WAN</td>
+                  <td><select name='dstWanIf'>
+<script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var interfaceInfo = '<%ejGetOther(wanInterfaceInfo, route)%>';
+   var interfaces = interfaceInfo.split('|');
+
+   for ( i = 0; i < interfaces.length; i++ ) {
+      var names = interfaces[i].split('/');
+      document.write("  <option value='" + names[1] + "'>");
+      document.writeln(interfaces[i]);
+   } 
+   document.writeln("  <option value='br0'> LAN/br0");
+}
+// done hiding -->
+</script>
+                     </select></td>
+               </tr>
+               <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            <br>
+            <!--<center>
+               <input type='button' onClick='btnApply()' value='Save/Apply'>
+            </center>-->
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style="CURSOR: hand"> 
+            </td></tr></table>
+         </form>
+      </blockquote>
+   </body>
+</html>

@@ -1,0 +1,157 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href="club.css" type="text/css">
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var prtcl = '<%ejGetOther(memInfo, ntwkPrtcl)%>';
+var service = '<%ejGet(serviceName)%>';
+var vpi = '<%ejGet(atmVpi)%>';
+var vci = '<%ejGet(atmVci)%>';
+var qs = '<%ejGet(quickSetup)%>';
+
+function frmLoad() {
+   var nat = '<%ejGet(enblNat)%>';
+   var firewall = '<%ejGet(enblFirewall)%>';
+   var enableService = '<%ejGet(enblService)%>';
+   var enableIgmp = '<%ejGet(enblIgmp)%>';
+
+   if ( service == '' ) {
+      switch ( prtcl ) {
+         case 'PPPoE':
+            service = 'pppoe_' + vpi + '_' + vci;
+            break;
+         case 'PPPoA':
+            service = 'pppoa_' + vpi + '_' + vci;
+            break;
+         case 'MER':
+            service = 'mer_' + vpi + '_' + vci;
+            break;
+         case 'IPoA':
+            service = 'ipoa_' + vpi + '_' + vci;
+            break;
+         case 'Bridge':
+            service = 'br_' + vpi + '_' + vci;
+            break;
+         case 'IPoW':
+            service = 'eth_' + vpi;
+            break;
+      }
+   }
+
+   with ( document.forms[0] ) {
+      if ( nat == '1' )
+         enblNat.checked = true;
+      else
+         enblNat.checked = false;
+      if ( firewall == '1' )
+         enblFirewall.checked = true;
+      else
+         enblFirewall.checked = false;
+      if ( enableService == '1' )
+         enblService.checked = true;
+      else
+         enblService.checked = false;
+      if ( enableIgmp == '1' )
+         enblIgmp.checked = true;
+      else
+         enblIgmp.checked = false;
+      serviceName.value = service;
+   }
+}
+
+function btnNext() {
+   var loc = 'ntwksum2.cgi?';
+
+   if ( qs == 1 )
+      loc = 'lancfg.cgi?';
+
+   with ( document.forms[0] ) {
+      if (serviceName.value == '' ) {
+         alert('Merci de renseigner le nom de la connexion.');
+         return;
+      }
+      len = serviceName.value.length;
+      if ( len > 32 ) {
+         alert('La longueur du nom de la connexion (' + len + ') est supérieure à la longueur autorisée [0 - 32].');
+         return;
+      }
+      if ( enblNat.checked == true )
+         loc += 'enblNat=1';
+      else
+         loc += 'enblNat=0';
+      if ( enblFirewall.checked == true )
+         loc += '&enblFirewall=1';
+      else
+         loc += '&enblFirewall=0';
+      if ( enblService.checked == true )
+         loc += '&enblService=1';
+      else
+         loc += '&enblService=0';
+      if ( enblIgmp.checked == true )
+         loc += '&enblIgmp=1';
+      else
+         loc += '&enblIgmp=0';
+
+      loc += '&serviceName=' + encodeUrl(serviceName.value);
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function btnBack() {
+   var loc;
+
+   if ( prtcl == 'IPoA' )
+      loc = 'ipoacfg.html';
+   else
+      loc = 'wancfg.html';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="20"><td nowrap><font class="mainCharacter">RESEAU DISTANT(WAN)</font></td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1"><b>PARAMETRES NAT:</b></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Le NAT vous permet de partager une adresse IP du réseau distant (WAN) entre plusieurs ordinateurs de votre réseau local (LAN).</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1"><input type='checkbox' name='enblNat'>&nbsp;&nbsp;Activer le NAT</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1"><input type='hidden' name='enblFirewall'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1"><b>Cocher les cases ci-dessous pour activer l’IGMP Multicast et le réseau distant (WAN).</b></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;&nbsp;<input type='checkbox' name='enblIgmp' checked>&nbsp;
+            IGMP Multicast</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;&nbsp;<input type='checkbox' name='enblService' checked>&nbsp;
+            Réseau distant (WAN)</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Nom de la connexion&nbsp;<input type="text" name="serviceName" size="40"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">&nbsp;</td></tr>
+            </table>
+            <center>
+               <!--<input type='button' class='but' onClick='btnBack()' value='Retour'> <input type='button' class='but' onClick='btnNext()' value='Suivant'>-->
+               <img border='0' onClick='btnBack()' src='button/btn_retour_on.gif' hspace='6' vspace='6' width='90' height='23' style="CURSOR: hand">&nbsp;&nbsp;<img border='0' onClick='btnNext()' src='button/btn_suivant_on.gif' hspace='6' vspace='6' width='100' height='23' style="CURSOR: hand">
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>

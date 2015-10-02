@@ -1,0 +1,172 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel='stylesheet' href='stylemain.css' type='text/css'>
+         <link rel='stylesheet' href='colors.css' type='text/css'>-->
+         <link rel='stylesheet' href='club.css' type='text/css'>
+            <script language='javascript' src='util.js'></script>
+            <script language='javascript'>
+<!-- hide
+var enbl = '<%ejGetWl(wlEnbl)%>';
+var bit = '<%ejGetWl(wlKeyBit)%>';
+var keyIdx = '<%ejGetWl(wlKeyIndex)%>';
+var keys = new Array( "<%ejGetWl(wlKey1)%>", "<%ejGetWl(wlKey2)%>",
+                      "<%ejGetWl(wlKey3)%>", "<%ejGetWl(wlKey4)%>" );
+var mode = '<%ejGetWl(wlAuthMode)%>';
+var wep = '<%ejGetWl(wlWep)%>';
+var auth = '<%ejGetWl(wlAuth)%>';
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      for ( i = 0; i < 4; i++ ) {
+         wlKeys[i].value = keys[i];
+      }
+      if (mode != "open" && mode != "shared") {
+         wlKeys[0].disabled = 1;
+         wlKeys[3].disabled = 1;
+         wlKeyIndex[0] = new Option("2", "2");
+         wlKeyIndex[1] = new Option("3", "3");
+         if (keyIdx != "2" && keyIdx != "3") {
+            wlKeyIndex.selectedIndex = 0;
+         }
+         else {
+            wlKeyIndex.selectedIndex = parseInt(keyIdx) - 2;
+         }
+      }
+      else {
+         wlKeyIndex[0] = new Option("1", "1");
+         wlKeyIndex[1] = new Option("2", "2");
+         wlKeyIndex[2] = new Option("3", "3");
+         wlKeyIndex[3] = new Option("4", "4");
+         wlKeyIndex.selectedIndex = parseInt(keyIdx) - 1;
+      }
+   }
+}
+
+function btnApply() {
+   if ( enbl == '0' ) {
+      alert('Impossible d’appliquer le changement quand le réseau sans fil est désactivé.');
+      return;
+   }
+   
+   with ( document.forms[0] ) {
+      var idx = wlKeyIndex.selectedIndex;
+      var keyIndex = wlKeyIndex.options[idx].value;
+      var num = parseInt(keyIndex-1);
+      if ( wlKeys[num].value == '' ) {
+         if (!((wep == 'enabled') && (mode == 'radius'))) {
+            alert('Impossible de choisir un clé qui a une valeur vide.');
+            return;
+         }
+      }
+      
+      var i, val;
+      for ( i = 0; i < 4; i++ ) {
+         val = wlKeys[i].value;
+         if ( val != '' ) {
+            if ( bit == '0' ) {
+               if ( isValidKey(val, 13) == false ) {
+                  alert("La clé "+val+" n'est pas une clé de cryptage 128-bits correcte.");
+                  return;
+               }
+            } else {
+               if ( isValidKey(val, 5) == false ) {
+                  alert("La clé "+val+" n'est pas une clé de cryptage 64-bits correcte.");
+                  return;
+               }
+            }
+         }
+      }
+
+      var loc = 'wlsecurity.wl?wlRefresh=1&';
+      loc += 'wlKeyIndex=' + keyIndex;
+      loc += '&wlKey1=' + encodeUrl(wlKeys[0].value);
+      loc += '&wlKey2=' + encodeUrl(wlKeys[1].value);
+      loc += '&wlKey3=' + encodeUrl(wlKeys[2].value);
+      loc += '&wlKey4=' + encodeUrl(wlKeys[3].value);
+
+      if (isNetscape())
+         var code = 'location.replace("' + loc + '")';
+      else
+         var code = 'location.assign("' + loc + '")';
+      eval(code);
+   }
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form onSubmit='return false'>
+            <img src='titres/titre_reseau.gif' width='230' height='25'>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Paramètres du réseau sans fil - Clé de Cryptage</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>
+            <script language='javascript'>
+<!-- hide
+if ( bit == '0' )
+   document.writeln("Entrer 13 caractères ASCII ou 26 Chiffres en hexadécimal pour les clés de cryptage 128 bits.");
+else
+   document.writeln("Entrer 5 caractères ASCII ou 10 Chiffres en hexadécimal pour les clés de cryptage 64 bits.");
+// done hiding -->
+            </script>
+            </td></tr>
+               <script language='javascript'>
+<!-- hide
+if ( bit == '0' ) {
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td width='120' class='content1'>Clé réseau 1:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' disabled size='35' maxlength=26></td>");
+   document.writeln("  </tr>");
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td class='content1'>Clé réseau 2:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' size='35' maxlength=26></td>");
+   document.writeln("  </tr>");
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td class='content1'>Clé réseau 3:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' size='35' maxlength=26></td>");
+   document.writeln("  </tr>");
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td class='content1'>Clé réseau 4:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' size='35' maxlength=26></td>");
+   document.writeln("  </tr>");
+} else {
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td width='120' class='content1'>Clé réseau 1:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' maxlength=10></td>");
+   document.writeln("  </tr>");
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td class='content1'>Clé réseau 2:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' maxlength=10></td>");
+   document.writeln("  </tr>");
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td class='content1'>Clé réseau 3:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' maxlength=10></td>");
+   document.writeln("  </tr>");
+   document.writeln("  <tr bgcolor='#f2f2f2'>");
+   document.writeln("    <td class='content1'>Clé réseau 4:</td>");
+   document.writeln("    <td><input type='text' name='wlKeys' maxlength=10></td>");
+   document.writeln("  </tr>");
+}
+// done hiding -->
+               </script>
+               <tr bgcolor='#f2f2f2'><td class='content1'>Clé Réseau utilisée:</td>
+                  <td><select name='wlKeyIndex' size='1'></select></td>
+               </tr>
+               <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            </table>
+            <br>
+            <!--<center>
+               <input type='button' onClick='btnApply()' value='Save/Apply'>
+            </center>-->
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style="CURSOR: hand">
+            </td></tr></table>
+         </form>
+      </blockquote>
+   </body>
+</html>

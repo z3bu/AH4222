@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<meta http-equiv="refresh" content="2">
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+<script language="javascript" src="util.js"></script>
+<script language="javascript">
+<!-- hide
+
+function frmLoad() {
+   var state = '<%ejGetTest(berState)%>';
+   if ( state == '0' ) {
+      var loc = 'berstop.tst';
+
+      if (isNetscape())
+         var code = 'location.replace("' + loc + '")';
+      else
+         var code = 'location.assign("' + loc + '")';
+      eval(code);
+   }
+}
+
+function btnStop() {
+   var loc = 'berstop.tst?berState=0';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function btnClose() {
+   var loc = 'berstop.tst?berState=0';
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+   window.close();
+}
+
+// done hiding -->
+</script>
+<base target="_self">
+</head>
+
+<body onLoad='frmLoad()'>
+<blockquote>
+<form>
+<b>Test  ADSL BER – En cours</b><br><br>
+Le test ADSL BER est en cours. La vitesse de connexion est de «  <%ejGetOther(lineRate,1)%>  » Kbps. Le test sera effectué pendant « <%ejGetTest(berTime)%>  » secondes.
+<br><br>
+Cliquer sur «  Arrêter » pour terminer le test.<br>
+<p align="center"><input type='button' class='but' onClick='btnStop()' value='Arrêter'><input type='button' class='but' onClick='btnClose()' value='Fermer'>
+</form>
+</blockquote>
+</body>
+</html>
+

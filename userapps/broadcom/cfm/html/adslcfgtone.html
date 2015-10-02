@@ -1,0 +1,390 @@
+<html>
+<head>
+<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+<!--<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>-->
+<link rel='stylesheet' href='club.css' type='text/css'>
+<script language="javascript" src="util.js"></script>
+<script language="javascript">
+<!-- hide
+function frmLoad() {
+   var tones = '<%ejGetTest(adslTestTones)%>'
+
+   if ( tones.length != 256) {
+      for ( i = 0; i < 256; i++ )
+         document.forms[0].tone[i].checked = true;
+      return;
+   }
+
+   with ( document.forms[0] ) {
+      for ( i = 0; i < 256; i++ ) {
+         if ( tones.charAt(i) == '1' )
+            tone[i].checked = true;
+         else
+            tone[i].checked = false;
+      }
+   }
+}
+
+function applyClick() {
+   var loc = 'adslcfgtone.cmd?adslTestTones=';
+   var toneList = '';
+   with ( document.forms[0] ) {
+      for ( i = 0; i < 256; i++ ) {
+         if ( tone[i].checked == true )
+            toneList += '1';
+         else
+            toneList += '0';
+      }
+      loc += toneList;
+   }
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+function clearAllClick() {
+   for ( i = 0; i < 256; i++ )
+      document.forms[0].tone[i].checked = false;
+}
+
+function checkAllClick() {
+   for ( i = 0; i < 256; i++ )
+      document.forms[0].tone[i].checked = true;
+}
+
+function closeClick()
+{
+   if (isNetscape())
+      var code = 'location.replace("adslcfgadv.html")';
+   else
+      var code = 'location.assign("adslcfgadv.html")';
+   eval(code);
+}
+
+//function closeClick() {
+//   window.close();
+//}
+
+// done hiding -->
+</script>
+</head>
+
+<body onLoad='frmLoad()'>
+<form>
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Choix de la tonalit&eacute;</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'><b>Paramètres de la tonalité ADSL:</b></td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'><b>Tonalités Upstream</b></td></tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>0</td>
+               <td class='content1'><input type='checkbox' name='tone'>1</td>
+               <td class='content1'><input type='checkbox' name='tone'>2</td>
+               <td class='content1'><input type='checkbox' name='tone'>3</td>
+               <td class='content1'><input type='checkbox' name='tone'>4</td>
+               <td class='content1'><input type='checkbox' name='tone'>5</td>
+               <td class='content1'><input type='checkbox' name='tone'>6</td>
+               <td class='content1'><input type='checkbox' name='tone'>7</td>
+               <td class='content1'><input type='checkbox' name='tone'>8</td>
+               <td class='content1'><input type='checkbox' name='tone'>9</td>
+               <td class='content1'><input type='checkbox' name='tone'>10</td>
+               <td class='content1'><input type='checkbox' name='tone'>11</td>
+               <td class='content1'><input type='checkbox' name='tone'>12</td>
+               <td class='content1'><input type='checkbox' name='tone'>13</td>
+               <td class='content1'><input type='checkbox' name='tone'>14</td>
+               <td class='content1'><input type='checkbox' name='tone'>15</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>16</td>
+               <td class='content1'><input type='checkbox' name='tone'>17</td>
+               <td class='content1'><input type='checkbox' name='tone'>18</td>
+               <td class='content1'><input type='checkbox' name='tone'>19</td>
+               <td class='content1'><input type='checkbox' name='tone'>20</td>
+               <td class='content1'><input type='checkbox' name='tone'>21</td>
+               <td class='content1'><input type='checkbox' name='tone'>22</td>
+               <td class='content1'><input type='checkbox' name='tone'>23</td>
+               <td class='content1'><input type='checkbox' name='tone'>24</td>
+               <td class='content1'><input type='checkbox' name='tone'>25</td>
+               <td class='content1'><input type='checkbox' name='tone'>26</td>
+               <td class='content1'><input type='checkbox' name='tone'>27</td>
+               <td class='content1'><input type='checkbox' name='tone'>28</td>
+               <td class='content1'><input type='checkbox' name='tone'>29</td>
+               <td class='content1'><input type='checkbox' name='tone'>30</td>
+               <td class='content1'><input type='checkbox' name='tone'>31</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'><b>Tonalités Downstream</b></td></tr>
+            <tr bgcolor='#f2f2f2'> 
+               <td class='content1'><input type='checkbox' name='tone'>32</td>
+               <td class='content1'><input type='checkbox' name='tone'>33</td>
+               <td class='content1'><input type='checkbox' name='tone'>34</td>
+               <td class='content1'><input type='checkbox' name='tone'>35</td>
+               <td class='content1'><input type='checkbox' name='tone'>36</td>
+               <td class='content1'><input type='checkbox' name='tone'>37</td>
+               <td class='content1'><input type='checkbox' name='tone'>38</td>
+               <td class='content1'><input type='checkbox' name='tone'>39</td>
+               <td class='content1'><input type='checkbox' name='tone'>40</td>
+               <td class='content1'><input type='checkbox' name='tone'>41</td>
+               <td class='content1'><input type='checkbox' name='tone'>42</td>
+               <td class='content1'><input type='checkbox' name='tone'>43</td>
+               <td class='content1'><input type='checkbox' name='tone'>44</td>
+               <td class='content1'><input type='checkbox' name='tone'>45</td>
+               <td class='content1'><input type='checkbox' name='tone'>46</td>
+               <td class='content1'><input type='checkbox' name='tone'>47</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>48</td>
+               <td class='content1'><input type='checkbox' name='tone'>49</td>
+               <td class='content1'><input type='checkbox' name='tone'>50</td>
+               <td class='content1'><input type='checkbox' name='tone'>51</td>
+               <td class='content1'><input type='checkbox' name='tone'>52</td>
+               <td class='content1'><input type='checkbox' name='tone'>53</td>
+               <td class='content1'><input type='checkbox' name='tone'>54</td>
+               <td class='content1'><input type='checkbox' name='tone'>55</td>
+               <td class='content1'><input type='checkbox' name='tone'>56</td>
+               <td class='content1'><input type='checkbox' name='tone'>57</td>
+               <td class='content1'><input type='checkbox' name='tone'>58</td>
+               <td class='content1'><input type='checkbox' name='tone'>59</td>
+               <td class='content1'><input type='checkbox' name='tone'>60</td>
+               <td class='content1'><input type='checkbox' name='tone'>61</td>
+               <td class='content1'><input type='checkbox' name='tone'>62</td>
+               <td class='content1'><input type='checkbox' name='tone'>63</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>64</td>
+               <td class='content1'><input type='checkbox' name='tone'>65</td>
+               <td class='content1'><input type='checkbox' name='tone'>66</td>
+               <td class='content1'><input type='checkbox' name='tone'>67</td>
+               <td class='content1'><input type='checkbox' name='tone'>68</td>
+               <td class='content1'><input type='checkbox' name='tone'>69</td>
+               <td class='content1'><input type='checkbox' name='tone'>70</td>
+               <td class='content1'><input type='checkbox' name='tone'>71</td>
+               <td class='content1'><input type='checkbox' name='tone'>72</td>
+               <td class='content1'><input type='checkbox' name='tone'>73</td>
+               <td class='content1'><input type='checkbox' name='tone'>74</td>
+               <td class='content1'><input type='checkbox' name='tone'>75</td>
+               <td class='content1'><input type='checkbox' name='tone'>76</td>
+               <td class='content1'><input type='checkbox' name='tone'>77</td>
+               <td class='content1'><input type='checkbox' name='tone'>78</td>
+               <td class='content1'><input type='checkbox' name='tone'>79</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>80</td>
+               <td class='content1'><input type='checkbox' name='tone'>81</td>
+               <td class='content1'><input type='checkbox' name='tone'>82</td>
+               <td class='content1'><input type='checkbox' name='tone'>83</td>
+               <td class='content1'><input type='checkbox' name='tone'>84</td>
+               <td class='content1'><input type='checkbox' name='tone'>85</td>
+               <td class='content1'><input type='checkbox' name='tone'>86</td>
+               <td class='content1'><input type='checkbox' name='tone'>87</td>
+               <td class='content1'><input type='checkbox' name='tone'>88</td>
+               <td class='content1'><input type='checkbox' name='tone'>89</td>
+               <td class='content1'><input type='checkbox' name='tone'>90</td>
+               <td class='content1'><input type='checkbox' name='tone'>91</td>
+               <td class='content1'><input type='checkbox' name='tone'>92</td>
+               <td class='content1'><input type='checkbox' name='tone'>93</td>
+               <td class='content1'><input type='checkbox' name='tone'>94</td>
+               <td class='content1'><input type='checkbox' name='tone'>95</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>96</td>
+               <td class='content1'><input type='checkbox' name='tone'>97</td>
+               <td class='content1'><input type='checkbox' name='tone'>98</td>
+               <td class='content1'><input type='checkbox' name='tone'>99</td>
+               <td class='content1'><input type='checkbox' name='tone'>100</td>
+               <td class='content1'><input type='checkbox' name='tone'>101</td>
+               <td class='content1'><input type='checkbox' name='tone'>102</td>
+               <td class='content1'><input type='checkbox' name='tone'>103</td>
+               <td class='content1'><input type='checkbox' name='tone'>104</td>
+               <td class='content1'><input type='checkbox' name='tone'>105</td>
+               <td class='content1'><input type='checkbox' name='tone'>106</td>
+               <td class='content1'><input type='checkbox' name='tone'>107</td>
+               <td class='content1'><input type='checkbox' name='tone'>108</td>
+               <td class='content1'><input type='checkbox' name='tone'>109</td>
+               <td class='content1'><input type='checkbox' name='tone'>110</td>
+               <td class='content1'><input type='checkbox' name='tone'>111</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>112</td>
+               <td class='content1'><input type='checkbox' name='tone'>113</td>
+               <td class='content1'><input type='checkbox' name='tone'>114</td>
+               <td class='content1'><input type='checkbox' name='tone'>115</td>
+               <td class='content1'><input type='checkbox' name='tone'>116</td>
+               <td class='content1'><input type='checkbox' name='tone'>117</td>
+               <td class='content1'><input type='checkbox' name='tone'>118</td>
+               <td class='content1'><input type='checkbox' name='tone'>119</td>
+               <td class='content1'><input type='checkbox' name='tone'>120</td>
+               <td class='content1'><input type='checkbox' name='tone'>121</td>
+               <td class='content1'><input type='checkbox' name='tone'>122</td>
+               <td class='content1'><input type='checkbox' name='tone'>123</td>
+               <td class='content1'><input type='checkbox' name='tone'>124</td>
+               <td class='content1'><input type='checkbox' name='tone'>125</td>
+               <td class='content1'><input type='checkbox' name='tone'>126</td>
+               <td class='content1'><input type='checkbox' name='tone'>127</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>128</td>
+               <td class='content1'><input type='checkbox' name='tone'>129</td>
+               <td class='content1'><input type='checkbox' name='tone'>130</td>
+               <td class='content1'><input type='checkbox' name='tone'>131</td>
+               <td class='content1'><input type='checkbox' name='tone'>132</td>
+               <td class='content1'><input type='checkbox' name='tone'>133</td>
+               <td class='content1'><input type='checkbox' name='tone'>134</td>
+               <td class='content1'><input type='checkbox' name='tone'>135</td>
+               <td class='content1'><input type='checkbox' name='tone'>136</td>
+               <td class='content1'><input type='checkbox' name='tone'>137</td>
+               <td class='content1'><input type='checkbox' name='tone'>138</td>
+               <td class='content1'><input type='checkbox' name='tone'>139</td>
+               <td class='content1'><input type='checkbox' name='tone'>140</td>
+               <td class='content1'><input type='checkbox' name='tone'>141</td>
+               <td class='content1'><input type='checkbox' name='tone'>142</td>
+               <td class='content1'><input type='checkbox' name='tone'>143</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>144</td>
+               <td class='content1'><input type='checkbox' name='tone'>145</td>
+               <td class='content1'><input type='checkbox' name='tone'>146</td>
+               <td class='content1'><input type='checkbox' name='tone'>147</td>
+               <td class='content1'><input type='checkbox' name='tone'>148</td>
+               <td class='content1'><input type='checkbox' name='tone'>149</td>
+               <td class='content1'><input type='checkbox' name='tone'>150</td>
+               <td class='content1'><input type='checkbox' name='tone'>151</td>
+               <td class='content1'><input type='checkbox' name='tone'>152</td>
+               <td class='content1'><input type='checkbox' name='tone'>153</td>
+               <td class='content1'><input type='checkbox' name='tone'>154</td>
+               <td class='content1'><input type='checkbox' name='tone'>155</td>
+               <td class='content1'><input type='checkbox' name='tone'>156</td>
+               <td class='content1'><input type='checkbox' name='tone'>157</td>
+               <td class='content1'><input type='checkbox' name='tone'>158</td>
+               <td class='content1'><input type='checkbox' name='tone'>159</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>160</td>
+               <td class='content1'><input type='checkbox' name='tone'>161</td>
+               <td class='content1'><input type='checkbox' name='tone'>162</td>
+               <td class='content1'><input type='checkbox' name='tone'>163</td>
+               <td class='content1'><input type='checkbox' name='tone'>164</td>
+               <td class='content1'><input type='checkbox' name='tone'>165</td>
+               <td class='content1'><input type='checkbox' name='tone'>166</td>
+               <td class='content1'><input type='checkbox' name='tone'>167</td>
+               <td class='content1'><input type='checkbox' name='tone'>168</td>
+               <td class='content1'><input type='checkbox' name='tone'>169</td>
+               <td class='content1'><input type='checkbox' name='tone'>170</td>
+               <td class='content1'><input type='checkbox' name='tone'>171</td>
+               <td class='content1'><input type='checkbox' name='tone'>172</td>
+               <td class='content1'><input type='checkbox' name='tone'>173</td>
+               <td class='content1'><input type='checkbox' name='tone'>174</td>
+               <td class='content1'><input type='checkbox' name='tone'>175</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>176</td>
+               <td class='content1'><input type='checkbox' name='tone'>177</td>
+               <td class='content1'><input type='checkbox' name='tone'>178</td>
+               <td class='content1'><input type='checkbox' name='tone'>179</td>
+               <td class='content1'><input type='checkbox' name='tone'>180</td>
+               <td class='content1'><input type='checkbox' name='tone'>181</td>
+               <td class='content1'><input type='checkbox' name='tone'>182</td>
+               <td class='content1'><input type='checkbox' name='tone'>183</td>
+               <td class='content1'><input type='checkbox' name='tone'>184</td>
+               <td class='content1'><input type='checkbox' name='tone'>185</td>
+               <td class='content1'><input type='checkbox' name='tone'>186</td>
+               <td class='content1'><input type='checkbox' name='tone'>187</td>
+               <td class='content1'><input type='checkbox' name='tone'>188</td>
+               <td class='content1'><input type='checkbox' name='tone'>189</td>
+               <td class='content1'><input type='checkbox' name='tone'>190</td>
+               <td class='content1'><input type='checkbox' name='tone'>191</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>192</td>
+               <td class='content1'><input type='checkbox' name='tone'>193</td>
+               <td class='content1'><input type='checkbox' name='tone'>194</td>
+               <td class='content1'><input type='checkbox' name='tone'>195</td>
+               <td class='content1'><input type='checkbox' name='tone'>196</td>
+               <td class='content1'><input type='checkbox' name='tone'>197</td>
+               <td class='content1'><input type='checkbox' name='tone'>198</td>
+               <td class='content1'><input type='checkbox' name='tone'>199</td>
+               <td class='content1'><input type='checkbox' name='tone'>200</td>
+               <td class='content1'><input type='checkbox' name='tone'>201</td>
+               <td class='content1'><input type='checkbox' name='tone'>202</td>
+               <td class='content1'><input type='checkbox' name='tone'>203</td>
+               <td class='content1'><input type='checkbox' name='tone'>204</td>
+               <td class='content1'><input type='checkbox' name='tone'>205</td>
+               <td class='content1'><input type='checkbox' name='tone'>206</td>
+               <td class='content1'><input type='checkbox' name='tone'>207</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>208</td>
+               <td class='content1'><input type='checkbox' name='tone'>209</td>
+               <td class='content1'><input type='checkbox' name='tone'>210</td>
+               <td class='content1'><input type='checkbox' name='tone'>211</td>
+               <td class='content1'><input type='checkbox' name='tone'>212</td>
+               <td class='content1'><input type='checkbox' name='tone'>213</td>
+               <td class='content1'><input type='checkbox' name='tone'>214</td>
+               <td class='content1'><input type='checkbox' name='tone'>215</td>
+               <td class='content1'><input type='checkbox' name='tone'>216</td>
+               <td class='content1'><input type='checkbox' name='tone'>217</td>
+               <td class='content1'><input type='checkbox' name='tone'>218</td>
+               <td class='content1'><input type='checkbox' name='tone'>219</td>
+               <td class='content1'><input type='checkbox' name='tone'>220</td>
+               <td class='content1'><input type='checkbox' name='tone'>221</td>
+               <td class='content1'><input type='checkbox' name='tone'>222</td>
+               <td class='content1'><input type='checkbox' name='tone'>223</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>224</td>
+               <td class='content1'><input type='checkbox' name='tone'>225</td>
+               <td class='content1'><input type='checkbox' name='tone'>226</td>
+               <td class='content1'><input type='checkbox' name='tone'>227</td>
+               <td class='content1'><input type='checkbox' name='tone'>228</td>
+               <td class='content1'><input type='checkbox' name='tone'>229</td>
+               <td class='content1'><input type='checkbox' name='tone'>230</td>
+               <td class='content1'><input type='checkbox' name='tone'>231</td>
+               <td class='content1'><input type='checkbox' name='tone'>232</td>
+               <td class='content1'><input type='checkbox' name='tone'>233</td>
+               <td class='content1'><input type='checkbox' name='tone'>234</td>
+               <td class='content1'><input type='checkbox' name='tone'>235</td>
+               <td class='content1'><input type='checkbox' name='tone'>236</td>
+               <td class='content1'><input type='checkbox' name='tone'>237</td>
+               <td class='content1'><input type='checkbox' name='tone'>238</td>
+               <td class='content1'><input type='checkbox' name='tone'>239</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'>
+               <td class='content1'><input type='checkbox' name='tone'>240</td>
+               <td class='content1'><input type='checkbox' name='tone'>241</td>
+               <td class='content1'><input type='checkbox' name='tone'>242</td>
+               <td class='content1'><input type='checkbox' name='tone'>243</td>
+               <td class='content1'><input type='checkbox' name='tone'>244</td>
+               <td class='content1'><input type='checkbox' name='tone'>245</td>
+               <td class='content1'><input type='checkbox' name='tone'>246</td>
+               <td class='content1'><input type='checkbox' name='tone'>247</td>
+               <td class='content1'><input type='checkbox' name='tone'>248</td>
+               <td class='content1'><input type='checkbox' name='tone'>249</td>
+               <td class='content1'><input type='checkbox' name='tone'>250</td>
+               <td class='content1'><input type='checkbox' name='tone'>251</td>
+               <td class='content1'><input type='checkbox' name='tone'>252</td>
+               <td class='content1'><input type='checkbox' name='tone'>253</td>
+               <td class='content1'><input type='checkbox' name='tone'>254</td>
+               <td class='content1'><input type='checkbox' name='tone'>255</td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='16'>&nbsp;</td></tr>
+</table><br>
+<!--<input type='button' class='but' onClick='checkAllClick()' value='Tout s&eacute;lectionner'>
+<input type='button' class='but' onClick='clearAllClick()' value='Tout effacer'>
+<input type='button' class='but' onClick='applyClick()' value='Appliquer'>
+<input type='button' class='but' onClick='closeClick()' value='Fermer la fen&ecirc;tre'>-->
+<table width='597'><tr><td align='center'>
+            <img border='0' onClick='checkAllClick()' src='button/btn_selectionner_on.gif' hspace='6' vspace='6' width='150' height='23' style="CURSOR: hand">&nbsp;&nbsp;
+            <img border='0' onClick='clearAllClick()' src='button/btn_effacer_on.gif' hspace='6' vspace='6' width='120' height='23' style="CURSOR: hand">&nbsp;&nbsp;
+            <img border='0' onClick='applyClick()' src='button/btn_appliquer_on.gif' hspace='6' vspace='6' width='100' height='23' style="CURSOR: hand">&nbsp;&nbsp;
+            <img border='0' onClick='closeClick()' src='button/btn_fermer_on.gif' hspace='6' vspace='6' width='150' height='23' style="CURSOR: hand">
+</td></tr></table>
+</form>
+</body>
+</html>

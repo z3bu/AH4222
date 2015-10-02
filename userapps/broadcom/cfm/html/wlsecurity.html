@@ -1,0 +1,791 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+var enblWireless = '<%ejGetWl(wlEnbl)%>';
+var radiusServerIP = '<%ejGetWl(wlRadiusServerIP)%>';
+var mode = '<%ejGetWl(wlAuthMode)%>';
+var bit = '<%ejGetWl(wlKeyBit)%>';
+var keyIdx = '<%ejGetWl(wlKeyIndex)%>';
+var keys = new Array( "<%ejGetWl(wlKey1)%>", "<%ejGetWl(wlKey2)%>",
+                      "<%ejGetWl(wlKey3)%>", "<%ejGetWl(wlKey4)%>" );
+var wpaPskKey = '<%ejGetWl(wlWpaPsk)%>';
+var wpaGTKRekey = '<%ejGetWl(wlWpaGTKRekey)%>';
+var radiusPort = '<%ejGetWl(wlRadiusPort)%>';
+var radiusKey = '<%ejGetWl(wlRadiusKey)%>';
+var tem_wep = '<%ejGetWl(wlWep)%>';
+var wpa = '<%ejGetWl(wlWpa)%>';
+var auth = '<%ejGetWl(wlAuth)%>';
+var wlCorerev = '<%ejGetWl(wlCoreRev)%>';
+
+var wlRefresh = '<%ejGetWl(wlRefresh)%>';
+var varPreauth = '<%ejGetWl(wlPreauth)%>';
+var varNetReauth = '<%ejGetWl(wlNetReauth)%>';
+
+if(tem_wep == "enabled")
+   var wep = 'activé ';
+else
+   var wep = 'désactivé ';
+
+
+if ( wlRefresh == '1' ) {
+   if (isNetscape())
+      var code = 'location.replace("wlsecrefresh.wl?wlRefresh=0")';
+   else
+      var code = 'location.assign("wlsecrefresh.wl?wlRefresh=0")';
+   eval(code);   
+}
+
+function getPreauth(wlPreauth) {
+   var ret;
+   
+   if ( wlPreauth == "on" )
+      ret = 1;
+   else
+      ret = 0;
+   return ret;
+}
+
+function getCipherIndex(cipher) {
+   var ret;
+   
+   if ( cipher == "tkip" )
+      ret = 0;
+   else if ( cipher == "aes" )
+      ret = 1;
+   else if( cipher == "tkip+aes" )
+      ret = 2;
+   else
+      ret = 0;
+         
+   return ret;
+}
+
+function isValidWPAPskKey(val) {
+   var ret = false;
+   var len = val.length;
+   var maxSize = 64;
+   var minSize = 8;
+
+   if ( len >= minSize && len < maxSize )
+      ret = true;
+   else if ( len == maxSize ) {
+      for ( i = 0; i < maxSize; i++ )
+         if ( isHexaDigit(val.charAt(i)) == false )
+            break;
+      if ( i == maxSize )
+         ret = true;
+   } else
+      ret = false;
+
+   return ret;
+}
+
+function hideWPAPskKey(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('wpaPreShareKey').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         with ( document.forms[0] ) {
+            if ( hide == 1 ) {
+               wlWpaPsk.value = '';
+            } else {
+               wlWpaPsk.value = wpaPskKey;
+            }
+         }
+      } else  // IE 4
+         document.all.wpaPreShareKey.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideWPAGTKRekey(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('wpaGTKRekey').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         with ( document.forms[0] ) {
+            if ( hide == 1 ) {
+               wlWpaGtkRekey.value = '';
+            } else {
+               wlWpaGtkRekey.value = wpaGTKRekey;
+            }
+         }
+      } else  // IE 4
+         document.all.wpaGTKRekey.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideRadius(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('wlRadius').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         with ( document.forms[0] ) {
+            if ( hide == 1 ) {
+               wlRadiusIPAddr.value = '';
+               wlRadiusPort.value = '';
+               wlRadiusKey.value = '';
+            } else {
+               wlRadiusIPAddr.value = radiusServerIP;
+               wlRadiusPort.value = radiusPort;
+               wlRadiusKey.value = radiusKey;
+            }
+         }
+      } else  // IE 4
+         document.all.wlRadius.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideKeyInfo(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('keyInfo').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         document.forms[0].wlKeyBit.selectedIndex = 0;
+      } else  // IE 4
+         document.all.keyInfo.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideWpa(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('wlWpaD').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         document.forms[0].wlWpa.selectedIndex = getCipherIndex(wpa);
+      } else  // IE 4
+         document.all.wlWpaD.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideWep(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('wlWepD').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         document.forms[0].wlWep.selectedIndex = 0;
+      } else  // IE 4
+         document.all.wlWepD.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideWepStrength(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('keyInfo').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+         document.forms[0].wlKeyBit.selectedIndex = 0;
+      } else  // IE 4
+         document.all.keyInfo.style.visibility = status;
+   }
+   move_position();
+}
+
+function hidePreauth(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('Preauth').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+      	if ( hide == 1 ) {
+            document.forms[0].wlPreauth.selectedIndex = 0;
+        }else {
+            document.forms[0].wlPreauth.selectedIndex = getPreauth(varPreauth);
+        }                  
+      } else  // IE 4
+         document.all.Preauth.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideNetReauth(hide) {
+   var status = 'visible';
+   if ( hide == 1 )
+      status = 'hidden';
+   if (document.getElementById)  // DOM3 = IE5, NS6
+      document.getElementById('NetReauth').style.visibility = status;
+   else {
+      if (document.layers) { // Netscape 4
+      	if ( hide == 1 ) {
+            document.forms[0].wlNetReauth.value = '';
+        }else {
+            document.forms[0].wlNetReauth.value = varNetReauth;
+        }
+
+      } else  // IE 4
+         document.all.NetReauth.style.visibility = status;
+   }
+   move_position();
+}
+
+function hideAllElements()
+{
+      hideWpa(1); hideWPAPskKey(1); hideWPAGTKRekey(1); hideRadius(1);
+      hideWPAGTKRekey(1); hideWPAPskKey(1); hidePreauth(1); hideNetReauth(1);
+      //hideWep(1);hideWepStrength(1);
+      move_position();
+}
+
+function encrypChange()
+{
+   with ( document.forms[0] ) {
+      var cwep = wlWep[wlWep.selectedIndex].value;
+      var authMode = wlAuthMode[wlAuthMode.selectedIndex].value;
+ 
+      // alert('wlWep value: "' + cwep + '"');
+      //if (cwep == "enabled") {
+      if(cwep == "activé ") {
+         hideKeyInfo(0);
+         if (authMode != "open" && authMode != "shared") {
+            if (keyIdx != "2" && keyIdx != "3") { // only key 2 and 3 can be used
+               keyIdx = "2";
+            }
+         }
+      } else {
+         hideKeyInfo(1);
+      }
+   }
+}
+
+
+function authModeChange(OnPageLoad) {
+
+   with ( document.forms[0] ) {
+      var authMode = wlAuthMode[wlAuthMode.selectedIndex].value;
+      var i, algos;
+
+      //alert('authModeChange:authMode= "' + authMode+ '" (EOM).');
+
+      hideAllElements();
+      	 
+      //show adequate forms for each mode
+      switch ( authMode ) {
+											
+	  case 'open':	 
+	  case 'shared':
+	     hideWep(0);
+	     hideWepStrength(0);
+	     break;
+	     
+	  case 'radius':
+	     hideRadius(0);	     
+	     hideWep(0);
+	     break;
+	     	     
+	  case 'wpa2':      
+	  case 'wpa2mix':
+	     hidePreauth(0);
+	     hideNetReauth(0); 
+	  case 'wpa':
+	     hideWpa(0);
+	     hideRadius(0);
+	     hideWPAGTKRekey(0);
+	     break;      
+	  
+	  case 'psk2':      
+	  case 'psk2mix': 
+	  case 'psk':  
+	     hideWpa(0);
+	     hideWPAGTKRekey(0);
+	     hideWPAPskKey(0);
+	     break;       
+	       
+      }   
+      
+      if(OnPageLoad==1){  
+
+	  // Define new algorithms
+      	  if (wlCorerev >= 3)
+             algos = new Array("TKIP", "AES", "TKIP+AES");
+      	  else
+             algos = new Array("TKIP");                  
+          
+          // Reconstruct algorithm array from new algorithms
+          wlWpa.length = algos.length;
+               
+          for (var i in algos) {          	
+          
+              wlWpa[i] = new Option(algos[i], algos[i].toLowerCase());
+              wlWpa[i].value = algos[i].toLowerCase();
+           	                    	
+	      if (algos[i].toLowerCase() == wpa)
+      		 wlWpa[i].selected = true;
+
+          }  
+      }      
+            
+      //advice default cipher selection,remove if not desired
+      if(OnPageLoad==0) { 
+      
+          if(authMode == "wpa" || authMode == "psk")
+      		wlWpa.selectedIndex=0;       		
+          if(authMode == "wpa2" || authMode == "psk2")
+        	wlWpa.selectedIndex=1;    		        	        	
+          if(authMode == "wpa2mix" || authMode == "psk2mix")  
+        	wlWpa.selectedIndex=2;    
+        			        	
+      	  wpa=wlWpa[wlWpa.selectedIndex].value;  
+    	
+      }  
+
+     
+      // wep options
+      wlWep.length = 0;
+      if (authMode == "shared" || authMode == "radius") {  // shared and radius must have wep on
+         // wlWep[0] = new Option("Enabled", "enabled");
+         wlWep[0] = new Option("Activé ","activé ");
+         wlWep[0].selected = true;
+      }
+      else {
+         // wlWep[0] = new Option("Disabled", "disabled");
+         // wlWep[1] = new Option("Enabled", "enabled");
+         wlWep[0] = new Option("Désactivé ", "désactivé ");         
+         wlWep[1] = new Option("Activé ","activé ");
+         if ((authMode.indexOf("wpa")!= -1 || authMode.indexOf("psk")!= -1) && (mode == "open" || mode == "shared" || mode == "radius")) { // set wep off if switch to wpa modes
+            wlWep[0].selected = true;
+         }
+         //else if (wep == "enabled") {
+         else if (wep == "activé ") {
+            wlWep[1].selected = true;
+         }
+         else {
+            wlWep[0].selected = true;
+         }
+      }                                             
+   }
+   encrypChange();       
+}
+
+function btnApply(place) {
+   var swep = document.forms[0].wlWep[document.forms[0].wlWep.selectedIndex].value;
+   var swpa = document.forms[0].wlWpa[document.forms[0].wlWpa.selectedIndex].value;
+   
+   if ( enblWireless == '0' ) {
+      if ( place == 'wlsecurity.wl' )
+         alert('Impossible d’appliquer le changement quand le réseau sans fil est désactivé.');
+      else
+         alert('Impossible de définir une clé de cryptage quand le réseau sans fil est désactivé.');
+      return;
+   }
+   
+   if ( place == 'wlsecurity.wl' ) {
+      var authMode = document.forms[0].wlAuthMode[document.forms[0].wlAuthMode.selectedIndex].value;
+      if (authMode != 'radius' && swep == 'enabled') {
+         var idx = parseInt(keyIdx)-1;
+         var msg = "";
+         if (authMode != "open" && authMode != "shared") {
+            msg = " (only keys 2 and 3 are active for modes other than open or shared)"
+         }
+         if ( document.forms[0].wlKeyBit.selectedIndex  == 0 ) {
+            if ( keys[idx] == '' || isValidKey(keys[idx], 13) == false ) {
+               alert('Pour la clé de cryptage WEP à 128-bits '+msg+', merci de cliquer sur "Définir la clé de cryptage" pour saisir les 13 caractères ASCII ou les 26 chiffres hexadécimaux.');
+               return;
+            }
+         } else {
+
+            if ( keys[idx] == '' || isValidKey(keys[idx], 5) == false ) {
+               alert('Pour la clé de cryptage WEP à 64-bits '+msg+', merci de cliquer sur "Définir la clé de cryptage" pour saisir les 5 caractères ASCII ou les 10 chiffres hexadécimaux.');
+               return;
+            }
+         }
+      }
+   }
+   
+   var loc = place + '?wlRefresh=1&';
+
+   with ( document.forms[0] ) {
+      var authMode = wlAuthMode[wlAuthMode.selectedIndex].value;
+      var value;
+
+      loc += 'wlAuthMode=';
+      loc += authMode;
+      if (authMode == 'shared') {
+         loc += '&wlAuth=1';
+      }
+      else {
+         loc += '&wlAuth=0';
+      }
+   
+      if (authMode.indexOf("psk")!= -1){ 
+         value = wlWpaPsk.value;
+         if ( isValidWPAPskKey(value) == false ) {
+            alert('La clé de cryptage WPA doit être comprise entre 8 et 64 caractères ASCII ou 64 chiffres hexadécimaux.');
+            return;
+         }
+         loc += '&wlWpaPsk=' + encodeUrl(wlWpaPsk.value);
+      }
+      
+      if (authMode.indexOf("wpa")!= -1 || authMode.indexOf("psk")!= -1){ 
+         //check GTK interval
+         value = parseInt(wlWpaGtkRekey.value);
+         if (  isNaN(value) == true || value < 0 || value > 0xffffffff ) {
+            alert('La fréquence de renouvellement de la clé WPA doit être comprise entre 0 et 4294967295.');
+            return;
+         }
+         loc += '&wlWpaGtkRekey=' + wlWpaGtkRekey.value;
+         
+         //check Reauth interval
+         value = parseInt(wlNetReauth.value);
+         if (  isNaN(value) == true || value < 0 || value > 0xffffffff ) {
+            alert('La fréquence de ré-authentification de la clé WPA "' + wlNetReauth.value + '"doit être comprise entre 0 et 4294967295.');
+            return;
+         }
+         loc += '&wlNetReauth=' + wlNetReauth.value;         
+         
+      }
+      if (authMode.indexOf("wpa")!= -1 || authMode == 'radius') 
+      {
+         if ( isValidIpAddress(wlRadiusIPAddr.value) == false ) 
+         {
+            alert("L'adresse IP du serveur RADIUS '" + wlRadiusIPAddr.value + "' est incorrecte.");
+            return;
+         }
+         if (isValidPort(wlRadiusPort.value) == false)
+         {
+            alert('Le numéro du port Radius '+ wlRadiusPort.value +' est incorrect.');
+            return;
+         }
+         loc += '&wlRadiusServerIP=' + wlRadiusIPAddr.value;
+         loc += '&wlRadiusPort=' + wlRadiusPort.value;
+         loc += '&wlRadiusKey=' + encodeUrl(wlRadiusKey.value);
+      }
+      if(wlWep[wlWep.selectedIndex].value == 'activé ')
+      // loc += '&wlWep=' + wlWep[wlWep.selectedIndex].value;
+         loc += '&wlWep=enabled';
+      else
+         loc += '&wlWep=disabled';
+      loc += '&wlWpa=' + wlWpa[wlWpa.selectedIndex].value;
+      idx = wlKeyBit.selectedIndex;
+      loc += '&wlKeyBit=' + wlKeyBit.options[idx].value;
+
+      loc += '&wlPreauth=' + getPreauth(wlPreauth.value);
+
+      if (isNetscape())
+         var code = 'location.replace("' + loc + '")';
+      else
+         var code = 'location.assign("' + loc + '")';
+          
+      //send to server
+      eval(code);
+      
+      hideAllElements();
+   }
+   
+}
+
+
+function getAuthModeIndex(mode) {
+   var ret = 0;
+   switch(mode) {
+   case 'shared':
+      ret = 1;
+      break;
+   case 'radius':
+      ret = 2;
+      break;
+   case 'wpa':
+      ret = 3;
+      break;
+   case 'psk':
+      ret = 4;
+      break;
+   case 'wpa2':
+      ret = 5;
+      break;
+   case 'psk2':
+      ret = 6;
+      break;
+   case 'wpa2mix':
+      ret = 7;
+      break;
+   case 'psk2mix':
+      ret = 8;
+      break;                        
+   default: // open
+      ret = 0;
+      break;
+   }
+   return ret;
+}
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      wlAuthMode.selectedIndex = getAuthModeIndex(mode);
+      wlWpaPsk.value = wpaPskKey;
+      wlWpaGtkRekey.value = wpaGTKRekey;
+      wlRadiusIPAddr.value = radiusServerIP;
+      wlRadiusPort.value = radiusPort;
+      wlRadiusKey.value = radiusKey;
+      wlKeyBit.selectedIndex = parseInt(bit);
+      wlPreauth.selectedIndex=varPreauth;
+      wlNetReauth.value=varNetReauth;     
+   }
+   authModeChange(1);
+   move_position();
+}
+
+function move_position()
+{
+   var pre_sta = document.getElementById('Preauth').style.visibility;
+   var netr_sta = document.getElementById('NetReauth').style.visibility;
+   var wpapre_sta = document.getElementById('wpaPreShareKey').style.visibility;   
+   var wpag_sta = document.getElementById('wpaGTKRekey').style.visibility;
+   var wlr_sta = document.getElementById('wlRadius').style.visibility;
+   var wlwpa_sta = document.getElementById('wlWpaD').style.visibility;
+   var wlwep_sta = document.getElementById('wlWepD').style.visibility;
+   var key_sta = document.getElementById('keyInfo').style.visibility;
+
+   if(wlwpa_sta != 'hidden')
+   {
+      document.getElementById('wlWepD').style.visibility = 'hidden';
+      wlwep_sta = 'hidden';
+   }
+
+   if(pre_sta == 'hidden')
+   {
+      document.getElementById('Preauth').style.position = 'absolute';
+      document.getElementById('Preauth').style.top = '-1000';
+      document.getElementById('Preauth').style.top = '-1000';      
+   }
+   else
+   {
+      document.getElementById('Preauth').style.position = 'static';
+      document.getElementById('Preauth').style.top = '0';
+      document.getElementById('Preauth').style.top = '0';   
+   }   
+
+   if(netr_sta == 'hidden')
+   {
+      document.getElementById('NetReauth').style.position = 'absolute';
+      document.getElementById('NetReauth').style.top = '-1000';
+      document.getElementById('NetReauth').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('NetReauth').style.position = 'static';
+      document.getElementById('NetReauth').style.top = '0';
+      document.getElementById('NetReauth').style.top = '0';
+   }
+
+   if(wpapre_sta == 'hidden')
+   {
+      document.getElementById('wpaPreShareKey').style.position = 'absolute';
+      document.getElementById('wpaPreShareKey').style.top = '-1000';
+      document.getElementById('wpaPreShareKey').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('wpaPreShareKey').style.position = 'static';
+      document.getElementById('wpaPreShareKey').style.top = '0';
+      document.getElementById('wpaPreShareKey').style.top = '0';
+   }
+
+   if(wpag_sta == 'hidden')
+   {
+      document.getElementById('wpaGTKRekey').style.position = 'absolute';
+      document.getElementById('wpaGTKRekey').style.top = '-1000';
+      document.getElementById('wpaGTKRekey').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('wpaGTKRekey').style.position = 'static';
+      document.getElementById('wpaGTKRekey').style.top = '0';
+      document.getElementById('wpaGTKRekey').style.top = '0';
+   }
+
+   if(wlr_sta == 'hidden')
+   {
+      document.getElementById('wlRadius').style.position = 'absolute';
+      document.getElementById('wlRadius').style.top = '-1000';
+      document.getElementById('wlRadius').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('wlRadius').style.position = 'static';
+      document.getElementById('wlRadius').style.top = '0';
+      document.getElementById('wlRadius').style.top = '0';
+   }
+
+   if(wlwpa_sta == 'hidden')
+   {
+      document.getElementById('wlWpaD').style.position = 'absolute';
+      document.getElementById('wlWpaD').style.top = '-1000';
+      document.getElementById('wlWpaD').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('wlWpaD').style.position = 'static';
+      document.getElementById('wlWpaD').style.top = '0';
+      document.getElementById('wlWpaD').style.top = '0';
+   }
+
+   if(wlwep_sta == 'hidden')
+   {
+      document.getElementById('wlWepD').style.position = 'absolute';
+      document.getElementById('wlWepD').style.top = '-1000';
+      document.getElementById('wlWepD').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('wlWepD').style.position = 'static';
+      document.getElementById('wlWepD').style.top = '0';
+      document.getElementById('wlWepD').style.top = '0';
+   }
+
+   if(key_sta == 'hidden')
+   {
+      document.getElementById('keyInfo').style.position = 'absolute';
+      document.getElementById('keyInfo').style.top = '-1000';
+      document.getElementById('keyInfo').style.top = '-1000';
+   }
+   else
+   {
+      document.getElementById('keyInfo').style.position = 'static';
+      document.getElementById('keyInfo').style.top = '0';
+      document.getElementById('keyInfo').style.top = '0';
+   }
+}
+// done hiding -->
+      </script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <img src='titres/titre_reseau.gif' width='230' height='25'>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>S&eacute;curit&eacute;</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cette page vous permet de modifier les paramètres de sécurité de votre point d’accès Wifi.</td></tr> 
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Vous pouvez choisir le mode d’authentification, le mode de cryptage utilisé, ainsi que la clé de cryptage.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>Cliquer sur "Sauver/Appliquer" pour configurer les options de sécurité Wifi.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Mode d’authentification:</td> 
+                  <td width="417"><select name='wlAuthMode' size="1" onChange='authModeChange(0)'>
+                        <option value="open">Ouvert</option>
+                        <option value="shared">Partagée</option>
+                        <option value="radius">802.1X</option>
+                        <option value="wpa">WPA</option>
+                        <option value="psk">WPA-PSK</option>
+                        <option value="wpa2">WPA2</option>
+                        <option value="psk2">WPA2 -PSK</option>
+                        <option value="wpa2mix">Mixed WPA2/WPA</option>
+                        <option value="psk2mix">Mixed WPA2/WPA -PSK</option>
+                     </select>
+                  </td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr></table>
+            <div id="Preauth">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>   
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Pré-authentification WPA2:</td>
+               <td><select name='wlPreauth' size="1">
+                   <option value="off">D&eacute;sactiv&eacute;</option>
+                   <option value="on">Activ&eacute;</option>
+               </select></td>
+            </tr></table>
+            </div>
+            <div id="NetReauth">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Fréquence de ré-authentification réseau:</td>
+               <td><input type='text' name='wlNetReauth' size='20' maxlength='10'></td>
+            </tr></table>
+            </div>   
+            <div id="wpaPreShareKey">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Clé de partage WPA:</td> 
+               <td><input type='password' name='wlWpaPsk' size='20' maxlength='64'></td>
+            </tr></table>
+            </div>
+            <div id="wpaGTKRekey">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Fréquence de renouvellement de la clé WPA :</td>
+               <td><input type='text' name='wlWpaGtkRekey' size='20' maxlength='10'></td>
+            </tr></table>
+            </div> 
+            <div id="wlRadius">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Adresse IP du serveur RADIUS:</td>
+               <td><input type='text' name='wlRadiusIPAddr' size='20' maxlength='15'></td>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Port RADIUS:</td>
+               <td><input type='text' name='wlRadiusPort' size='20' maxlength='5'></td>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Clé RADIUS:</td>
+               <td><input type='password' name='wlRadiusKey' size='20' maxlength='80'></td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr></table>
+            </div>
+            <div id="wlWpaD">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Cryptage WPA:</td>
+               <td><select name="wlWpa" onChange='encrypChange()'>
+               </select></td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr></table>
+            </div>
+            <div id="wlWepD">
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Cryptage WEP:</td>
+               <td><select name="wlWep" onChange='encrypChange()'>
+               </select></td>
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='2'>&nbsp;</td></tr></table>
+            </div>
+            <div id='keyInfo'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1' width='180'>Taille de la clé:</td>
+               <td><select name='wlKeyBit' size='1'>
+                   <option value="0" selected>128-bit</option>
+                   <option value="1">64-bit</option>
+               </select></td>
+               <td><img border='0' onClick='btnApply("wlcfgkey.wl")' src='button/btn_definir_cle_on.gif' hspace='6' vspace='6' width='200' height='23' style="CURSOR: hand"></td>
+               <!--<input type='button' onClick='btnApply("wlcfgkey.wl")' value='Set Encryption Keys'></td>-->
+            </tr>
+            <tr bgcolor='#f2f2f2'><td class='content1' colspan='3'>&nbsp;</td></tr></table>
+            </div>
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnApply("wlsecurity.wl")' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            <!--<center>
+               <input type='button' onClick='btnApply("wlsecurity.wl")' value='Save/Apply'>
+            </center>-->
+         </form>
+      </blockquote>
+   </body>
+</html>

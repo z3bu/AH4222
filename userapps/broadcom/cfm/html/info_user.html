@@ -1,0 +1,220 @@
+<html>
+   <head>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+            <link rel="stylesheet" href='club.css' type='text/css'>
+            <meta http-equiv="Pragma" content="no-cache">
+            <meta http-equiv="refresh" content="20">
+            <title></title>
+            <base target="_self">
+            <script language='javascript' src='util.js'></script>
+            <script language="javascript">
+<!-- hide
+var update_flag = '<%ejGet(upgrade_flag)%>';
+var AdslOn = '<%ejGetOther(stsadslget,5,1)%>';
+var WanIp = '<%ejGetOther(wanInterfaceInfo, wanip)%>';
+
+function frmLoad() {
+   var update = '<%ejFncCmd(stsadslupdate)%>';
+}
+
+function btnTftp() {
+   var loc = 'tftp_get_fw.cmd?site=1';
+
+   if((AdslOn == '&nbsp') || (WanIp == ''))
+   {
+      alert('Connexion impossible au serveur de mise à jour, veuillez ré-essayer');
+      return;
+   }
+   if(update_flag == 1)
+      var code = 'location.assign("club_alert.cmd")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+function btnTftpConf() {
+   var loc = 'tftp_get_Conf.cmd?site=1';
+
+   if((AdslOn == '&nbsp') || (WanIp == ''))
+   {
+      alert('Connexion impossible au serveur de mise à jour, veuillez ré-essayer');
+      return;
+   }
+   if(update_flag == 1)
+      var code = 'location.assign("club_alert.cmd")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+// done hiding -->
+            </script>
+   </head>
+   <!--<style type="text/css">
+   .mainTitle  {color: #afb3b5; font-size: 25pt; font-family: "Helvetica Neue"; font-weight: bold}
+   .mainCharacter {color: white; font-size: 11pt; font-family: "Verdana"; font-weight: bolder}
+   .content1  {color: #000000; font-size: 10pt; font-family: "Verdana"; font-weight: normal}
+   .content2  {color: #e1007c; font-size: 10pt; font-family: "Verdana"; font-weight: bolder}
+   </style>-->
+   <body onLoad='frmLoad()'>
+      <blockquote>
+            <!--<font class="mainTitle">INFORMATIONS MODEM</font>-->
+            <img src='titres/titre_infos.gif' width='300' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">      
+             <table border="0" cellpadding="3" cellspacing="0" width="597">
+                <tr bgcolor="#e2007a" height="17"><td colspan="3"><font class="mainCharacter">Informations Générales</font></td></tr>
+                <tr bgcolor="#f2f2f2">
+                   <td colspan="3"><font class="content1"><b>INFORMATIONS MODEM:</b></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Version du firmware :</font></td>
+                   <td colspan="2" align="left"><font class="content2"><%ejGet(sysVersion)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Version du fichier de configuration :</font></td>
+                   <td colspan="2" align="left"><font class="content2"><%ejGet(confVersion)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2"><td colspan="3">&nbsp;&nbsp;&nbsp;</td></tr>
+                <tr bgcolor="#f2f2f2">
+                   <td colspan="3"><font class="content1"><b>INFORMATIONS SUR LA LIGNE ADSL:</b></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Mode :</font></td>
+                   <td colspan="2" align="left"><font class="content2"><%ejGetOther(stsadslget, 5, 1)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td></td>
+                   <td align="left"><font class="content2"><b>(UPSTREAM)</b></font></td>
+                   <td align="left"><font class="content2"><b>(DOWNSTREAM)</b></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Débits de synchronisation ATM (Kbps):</font></td>
+                   <td align="left"><font class="content2"><%ejGetOther(lineRate, 0)%></font></td>
+                   <td align="left"><font class="content2"><%ejGetOther(lineRate, 1)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Marge signal sur bruit (dB) :</font></td>
+                   <td align="left"><font class="content2"><%ejGetOther(stsadslget, 8, 0)%></font></td>
+                   <td align="left"><font class="content2"><%ejGetOther(stsadslget, 1, 0)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Att&eacute;nuation (dB) :</font></td>
+                   <td align="left"><font class="content2"><%ejGetOther(stsadslget, 8, 1)%></font></td>
+                   <td align="left"><font class="content2"><%ejGetOther(stsadslget, 1, 1)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2"><td colspan="3">&nbsp;&nbsp;&nbsp;</td></tr>
+                <tr bgcolor="#f2f2f2">
+                   <td colspan="3"><font class="content1"><b>INFORMATIONS SUR LA CONNEXION EN COURS:</b></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Type de connexion:</font></td>
+<script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var interfaceInfo = '<%ejGetOther(wanInterfaceInfo, wanip)%>';
+   var interfaces = interfaceInfo.split('|');
+
+   if ( interfaceInfo.length != 0 )
+   {
+      document.writeln("                  <td align='left' colspan='2'><font class='content2'>");
+      for ( i = 0; i < interfaces.length; i++ ) {
+         var names = interfaces[i].split('/');
+         document.writeln(names[0]);
+         if ( i < (interfaces.length - 1) )
+            document.writeln("<br>");
+      }
+      document.writeln("                  </font></td>");
+   }
+   else
+      document.writeln("                  <td colspan='2'>&nbsp</td>");
+}
+// done hiding -->
+</script>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Etat de la connexion:</font></td>
+<script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var statelist = '<%ejGetOther(wanInterfaceInfo, state)%>';
+   var state = statelist.split('|');
+
+   if ( statelist.length != 0 )
+   {
+      document.writeln("                  <td align='left' colspan='2'><font class='content2'>");
+      for ( i = 0; i < state.length; i++ ) {
+         document.writeln(state);
+         if ( i < (state.length - 1) )
+            document.writeln("<br>");
+      }
+      document.writeln("                  </font></td>");
+   }
+   else
+      document.writeln("                  <td colspan='2'>&nbsp</td>");
+}
+// done hiding -->
+</script>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Adresse IP du réseau distant (WAN) :</font></td>
+<script language="javascript">
+<!-- hide
+{
+   var i = 0;
+   var interfaceInfo = '<%ejGetOther(wanInterfaceInfo, wanip)%>';
+   var interfaces = interfaceInfo.split('|');
+
+   if ( interfaceInfo.length != 0 )
+   {
+      document.writeln("                  <td align='left' colspan='2'><font class='content2'>");
+      for ( i = 0; i < interfaces.length; i++ ) {
+         var names = interfaces[i].split('/');
+         document.writeln(names[1]);
+         if ( i < (interfaces.length - 1) )
+            document.writeln("<br>");
+      }
+      document.writeln("                  </font></td>");
+   }
+   else
+      document.writeln("                  <td colspan='2'>&nbsp</td>");
+}
+// done hiding -->
+</script>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - TX/RX:</font></td>
+                   <td colspan="2" align="left"><font class="content2"><%ejGetOther(stsadslget, 8, 4)%>/<%ejGetOther(stsadslget, 1, 4)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Adresse du serveur DNS primaire :</font></td>
+                   <td colspan="2" align="left"><font class="content2"><%ejGetOther(sysInfo, dns)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Adresse du serveur DNS secondaire :</font></td>
+                   <td colspan="2" align="left"><font class="content2"><%ejGetOther(sysInfo, dns2)%></font></td>
+                </tr>
+                <tr bgcolor="#f2f2f2">
+                   <td nowrap><font class="content1"> - Adresse de la passerelle par d&eacute;faut :</font></td>
+<script language="javascript">
+<!-- hide
+var dfltGw = '<%ejGetOther(sysInfo, dfltGw)%>';
+var dfltGwIfc = '<%ejGetOther(sysInfo, dfltGwIfc)%>';
+if ( dfltGw != '&nbsp' )
+  document.writeln("                  <td align='left' colspan='2'><font class='content2'>" + dfltGw + "</font</td>");
+else
+  document.writeln("                  <td align='left' colspan='2'><font class='content2'>" + dfltGwIfc + "</font></td>");
+// done hiding -->
+</script>
+                </tr>
+             </table>
+             <br>
+            <table width='597'><tr><td align='center'>           
+            <img border='0' onClick='btnTftp()' src='button/btn_maj_firmware_on.gif' hspace='6' vspace='6' width='370' height='23' style="CURSOR: hand"></td></tr>
+            <tr><td align='center'>  
+            <img border='0' onClick='btnTftpConf()' src='button/btn_maj_config_on.gif' hspace='6' vspace='6' width='370' height='23' style="CURSOR: hand">
+            </td></tr></table>
+            <br>
+      </blockquote>
+   </body>
+</html>

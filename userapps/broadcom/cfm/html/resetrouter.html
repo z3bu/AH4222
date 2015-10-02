@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function btnReset() {
+   if (isNetscape())
+      var code = 'location.replace("rebootinfo.cgi")';
+   else
+      var code = 'location.assign("rebootinfo.cgi")';
+   eval(code);
+}
+
+function frmLoad() {
+   var sysReboot = '<%ejGet(sysReboot)%>';
+   var lanRefresh = '<%ejGet(lanRefresh)%>';
+
+   if ( sysReboot == '1' )
+      btnReset();
+   else if ( lanRefresh == '1' ) {
+      if (isNetscape())
+         var code = 'location.replace("resetrouter.cgi?lanRefresh=0")';
+      else
+         var code = 'location.assign("resetrouter.cgi?lanRefresh=0")';
+      eval(code);
+   }
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+            <img src='titres/titre_gestion.gif' width='270' height='25'><br>
+            <hr width='597' color='#afb3b5' size='4' align='left'>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#e2007a' height='20'><td nowrap><font class='mainCharacter'>Sauver/Redémarrer</font></td></tr></table>
+            <table border='0' cellpadding='3' cellspacing='0' width='597'>
+            <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>Cliquer ci-dessous pour sauvegarder votre configuration et redémarrer votre modem.</td></tr>
+            <tr bgcolor='#f2f2f2'><td class='content1'>&nbsp;</td></tr>
+            </table>
+            <br>
+            <table width='597'><tr><td align='center'>
+            <img border='0' onClick='btnReset()' src='button/btn_sauver_redemarrer_on.gif' hspace='6' vspace='6' width='180' height='23' style="CURSOR: hand">
+            </td></tr></table>
+      <!--<p align="center">
+         <input type='button' onClick='btnReset()' value='Save/Reboot'>
+         <br>
+      </p>-->
+   </body>
+</html>

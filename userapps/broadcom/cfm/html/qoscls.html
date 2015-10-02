@@ -1,0 +1,302 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <!--<link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>-->
+         <link rel="stylesheet" href='club.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+
+function btnApply() {
+   var loc = 'qoscls.cmd?action=add';
+
+   with ( document.forms[0] ) {
+      if ( txtclsname.value == '' ) {
+         msg = "Merci d'entrer le nom de la classe de trafic.";
+         alert(msg);
+         return;
+      }
+    
+      if(txtclsname.value.length > 15)
+      {
+         msg = "La longueur du nom de la classe de trafic " + txtclsname.value.length + " est supérieure à la longueur autorisée [0-15]";
+         alert(msg);
+         return;         
+      }
+
+      if ( isValidName(txtclsname.value) == false ) {
+         msg = "Merci d'entrer un nom correct pour la classe de trafic. Pas de caractères spéciaux.";
+         alert(msg);
+         return;
+      }       
+
+      idx = priority.selectedIndex;
+      if ( idx == 0 ) {
+         msg = 'Aucune priorité sélectionnée.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcaddr.value == "" && srcmask.value == "" && srcport.value == "" &&
+           dstaddr.value == "" && dstmask.value == "" && dstport.value == "" &&
+           // switchport.selectedIndex == 0 && protocol.selectedIndex && vlan8021p.selectedIndex == 0 ) {
+	   protocol.selectedIndex == 0 && vlan8021p.selectedIndex == 0 ) {
+         msg = 'Au moins une condition doit être renseignée.'
+         alert(msg);
+         return;
+      }
+
+      if ( srcaddr.value != "" && isValidIpAddress(srcaddr.value) == false ) {
+         msg = 'L’adresse IP Source "' + srcaddr.value + '" est incorrecte.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcmask.value != "" && isValidSubnetMask(srcmask.value) == false ) {
+         msg = 'L’adresse IP du masque de sous réseau Source "' + srcmask.value + '" est incorrecte.';
+         alert(msg);
+         return;
+      }
+
+      if ( srcaddr.value == "" && srcmask.value != "" ) {
+         msg = "Impossible d'avoir un masque de sous réseau Source sans avoir une adresse IP Source.";
+         alert(msg);
+         return;
+      }
+  
+      if ( srcport.value != "" && isValidPort(srcport.value) == false ) {
+         msg = 'Le numéro du port Source ou la plage des ports "' + srcport.value + '" est incorrect.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstaddr.value != "" && isValidIpAddress(dstaddr.value) == false ) {
+         msg = 'L’adresse IP de destination "' + dstaddr.value + '" est incorrecte.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstmask.value != "" && isValidSubnetMask(dstmask.value) == false ) {
+         msg = 'L’adresse IP du masque de sous réseau de destination"' + dstmask.value + '" est incorrecte.';
+         alert(msg);
+         return;
+      }
+
+      if ( dstaddr.value == "" && dstmask.value != "" ) {
+         msg = "Impossible d'avoir un masque de sous réseau de destination sans une adresse IP de destination.";
+         alert(msg);
+         return;
+      }
+
+      if ( dstport.value != "" && isValidPort(dstport.value) == false ) {
+         msg = 'Le numéro du  port de destination "' + dstport.value + '" est incorrect ou se trouve dans une plage de ports invalide.';
+         alert(msg);
+         return;
+      }
+      
+      if ( (srcport.value != "" || dstport.value != "") && 
+           (protocol.selectedIndex == 0 || protocol.selectedIndex == 4) ) {
+         msg = 'Les protocoles TCP ou UDP doivent être tous les deux sélectionnés avec un numéro de port .';
+	 alert(msg);
+	 return;
+      }
+
+      if ( (vlan8021p.selectedIndex != 0) &&
+           (dstaddr.value != "" || dstaddr.value != "" ||
+	    srcaddr.value != "" || srcport.value != "" ||  protocol.selectedIndex != 0) ) {
+         msg = "la Priorité 802.1p ne doit pas être sélectionné en même temps qu'une condition de trafic IP";
+	 alert(msg);
+	 return;
+      }  
+
+      // class name
+      loc += '&clsName=' + encodeUrl(txtclsname.value);
+
+      // priority
+      idx = priority.selectedIndex;
+      val = priority.options[idx].value;
+      loc += '&priority=' + val;
+
+      // IP precedence bits
+      idx = precedence.selectedIndex;
+      val = precedence.options[idx].value;
+      loc += '&precedence=' + val;
+      
+      // IP type of service bits
+      idx = tos.selectedIndex;
+      val = tos.options[idx].value;
+      loc += '&tos=' + val;
+
+      // physical switch port
+      // idx = switchport.selectedIndex;
+      // val = switchport.options[idx].value;
+      val = -1;
+      loc += '&switchport=' + val;
+      
+      // protocol
+      idx = protocol.selectedIndex;
+      val = protocol.options[idx].value;
+      loc += '&protocol=' + val;
+
+      // source address
+      if ( srcaddr.value != "" )
+         loc += '&srcAddr=' + srcaddr.value;
+
+      // source subnet mask
+      if ( srcmask.value != "" )
+         loc += '&srcMask=' + srcmask.value;
+
+      // source port
+      if ( srcport.value != "" )
+         loc += '&srcPort=' + srcport.value;
+
+      // destination address
+      if ( dstaddr.value != "" )
+         loc += '&dstAddr=' + dstaddr.value;
+
+      // destination subnet mask
+      if ( dstaddr.value != "" )
+         loc += '&dstMask=' + dstmask.value;
+
+      // destination port
+      if ( dstport.value != "" )
+         loc += '&dstPort=' + dstport.value;
+	 
+      // VLAN 802.1p priority
+      idx = vlan8021p.selectedIndex;
+      val = vlan8021p.options[idx].value;
+      loc += '&vlan8021p=' + val;            
+	 
+   }
+
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+      </script>
+   </head>
+   <body>
+      <blockquote>
+         <form>
+            <img src='titres/titre_config.gif' width='350' height='25'>
+            <hr width="597" color="#afb3b5" size="4" align="left">
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#e2007a" height="20"><td nowrap><font class="mainCharacter">Ajouter une règle de classe de trafic</font></td></tr></table>
+            <table border="0" cellpadding="3" cellspacing="0" width="597">
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Vous pouvez créer ici, une classe de trafic pour le flux ascendant, définir la priorité des files d'attentes et en  option réécrire l'entête du « type de service IP ».</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Une règle comprend un nom de classe et au moins une des conditions ci-dessous. Tous les champs ci-dessous doivent être remplis pour que la règle prenne effet.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Cliquer sur "Sauvegarder/ Appliquer" pour sauver et activer la règle.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Nom de la classe de trafic: </td><td><input type='text' size="22" name="txtclsname"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'><b>Assigner la priorité et/ou la priorité IP et/ou le type de service pour la classe:</b></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Si aucune valeur n'est sélectionnée pour " IP affectée " et/ou "Type de Service IP ", l’octet de l’entête IP du « type de service » pour un flux ascendant, sera écrasé par la valeur sélectionnée.</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Priorité :</td>
+                     <td><select name='priority' size="1">
+                        <option value="0" selected>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <option value="1">
+                        Basse
+                        <option value="2">
+                        Moyenne
+                        <option value="3">
+                        Haute</option>
+                     </select></td></tr>
+             <tr bgcolor="#f2f2f2"><td class="content1">IP affectée:</td>
+                  <td><select name='precedence' size="1">
+                        <option value="-1" selected>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <option value="0">
+                        0
+                        <option value="1">
+                        1
+                        <option value="2">
+                        2
+                        <option value="3">
+                        3
+                        <option value="4">
+                        4
+                        <option value="5">
+                        5
+                        <option value="6">
+                        6
+                        <option value="7">
+                           7</option>
+                     </select></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Type de service IP:</td>
+                  <td><select name='tos' size="1">
+                        <option value="-1" selected>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <option value="0">
+                        Service Normal
+                        <option value="2">
+                        Minimiser le cout
+                        <option value="4">
+                        Maximiser la fiabilité 
+                        <option value="8">
+                        Maximiser le ratio
+                        <option value="16">
+                        Minimiser le délai</option>
+                     </select></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'><b>Spécifier les conditions  du trafic pour la classe:</b></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>Renseigner les conditions ci-dessous soit  pour la couche IP et/ou soit pour la « priorité 802.1p » .</td></tr> 
+            <tr bgcolor="#f2f2f2"><td class="content1">Protocole:</td>
+                  <td><select name='protocol' size="1">
+                        <option value="-1" selected>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <option value="0">
+                        TCP/UDP
+                        <option value="1">
+                        TCP
+                        <option value="2">
+                        UDP
+                        <option value="3">
+                        ICMP
+                        <option value="4">
+                        IGMP
+                     </select></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Adresse IP Source:</td><td><input type='text' size="22" name="srcaddr"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Masque de sous-réseau source:</td><td><input type='text' size="22" name="srcmask"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Port Source:</td><td><input type='text' size="22" name="srcport"></td>
+            <tr bgcolor="#f2f2f2"><td class="content1">Adresse IP de destination:</td><td><input type='text' size="22" name="dstaddr"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Masque de sous-réseau de destination:</td><td><input type='text' size="22" name="dstmask"></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1">Port de destination :</td><td><input type='text' size="22" name="dstport"></td>
+            <tr bgcolor="#f2f2f2"><td class="content1">Priorité 802.1p:</td>
+                  <td><select name='vlan8021p' size="1">
+                        <option value="-1" selected>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <option value="0">
+                        0
+                        <option value="1">
+                        1
+                        <option value="2">
+                        2
+                        <option value="3">
+                        3
+                        <option value="4">
+                        4
+                        <option value="5">
+                        5
+                        <option value="6">
+                        6
+                        <option value="7">
+                           7</option>
+                     </select></td></tr>
+            <tr bgcolor="#f2f2f2"><td class="content1" colspan='2'>&nbsp;</td></tr>
+         </table>
+            <br>
+            <!--<center><input type='button' class='but' onClick='btnApply()' value='Sauver/Appliquer'></center>-->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img border='0' onClick='btnApply()' src='button/btn_sauver_appliquer_on.gif' hspace='6' vspace='6' width='160' height='23' style="CURSOR: hand">
+         </form>
+      </blockquote>
+   </body>
+</html>

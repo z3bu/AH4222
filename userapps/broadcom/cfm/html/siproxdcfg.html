@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+      <link rel="stylesheet" href='stylemain.css' type='text/css'>
+         <link rel="stylesheet" href='colors.css' type='text/css'>
+            <script language="javascript" src="util.js"></script>
+            <script language="javascript">
+<!-- hide
+var state = '<%ejGet(siproxdRefresh)%>';
+if ( state == '1' ) {
+   if (isNetscape())
+      var code = 'location.replace("siproxdcfg.cgi?siproxdRefresh=0")';
+   else
+      var code = 'location.assign("siproxdcfg.cgi?siproxdRefresh=0")';
+   eval(code);
+}
+
+function frmLoad() {
+   with ( document.forms[0] ) {
+      enblSiproxd[<%ejGet(enblSiproxd)%>].checked = true;
+   }
+}
+
+function btnApply() {
+   var loc = 'siproxdcfg.cgi?';
+   with ( document.forms[0] ) {
+      if ( enblSiproxd[1].checked == true )
+         loc += 'enblSiproxd=1';
+      else
+         loc += 'enblSiproxd=0';
+   }
+   if (isNetscape())
+      var code = 'location.replace("' + loc + '")';
+   else
+      var code = 'location.assign("' + loc + '")';
+   eval(code);
+}
+
+// done hiding -->
+</script>
+   </head>
+   <body onLoad='frmLoad()'>
+      <blockquote>
+         <form>
+            <b>SIP ALG - Configuration</b>
+            <br><br>
+            Session Intitation Protocol Application Level Gateway (SIP ALG) is a daemon for
+            the SIP protocol. It handles registrations of SIP clients on a private IP
+            network and performs rewriting of the SIP message bodies to make SIP
+            connections possible via an masquerading firewall.
+            It allows SIP clients (like kphone, linphone) to work behind the DSL Router.
+            <br><br>
+            Select the desired values and click "Save/Apply" to enable or disable SIP proxy.<br>
+            <br>
+            <table border="0" cellpadding="4" cellspacing="4">
+               <tr>
+                  <td class='hd'>SIP ALG:&nbsp;&nbsp</td>
+                  <td><input name='enblSiproxd' type='radio'>Disable</td>
+                  <td><input name='enblSiproxd' type='radio'>Enable</td>
+               </tr>
+            </table>
+            <br>
+            <center>
+               <input type='button' onClick='btnApply()' value='Save/Apply'>
+            </center>
+         </form>
+      </blockquote>
+   </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head>
+<html><head>
+<meta http-equiv='Pragma' content='no-cache'>
+<!--<link rel='stylesheet' href='club.css' type='text/css'>-->
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+<script language='javascript' src='menuTree.js'></script>
+<script language='javascript' src='menuTitle.js'></script>
+<script language='javascript' src='menuBcm.js'></script>
+<script language='javascript'>
+function frmLoad()
+{
+  var user = '<%ejGet(curUserName)%>';
+  if(user == 'support')
+     parent.preload('info_support.html');
+  else if(user == 'user')
+     parent.preload('info_user.html');
+  else
+     parent.preload('info.html');
+}
+</script>
+<title></title>
+<base target="_self">
+</head>
+<body class='mainMenuBody' topmargin="0" leftmargin="0" marginwidth="0" marginheight="0" onLoad='frmLoad()'>
+<table border="0" align="center" bordercolor='#afb3b5' cellpadding="0" cellspacing="1" width="150">
+  <tr>
+  <td class='menu' valign="top" align="middle">
+	<script language='javascript'>
+<!-- hide
+   var options = new Array(
+                           '<%ejGetOther(sysInfo, noBrPrtcl)%>',
+                           '<%ejGetOther(sysInfo, pppIpExtension)%>',
+                           '<%ejGet(enblDhcpSrv)%>',
+                           '<%ejGet(curUserName)%>'
+                          );
+    createDeviceInfoMenu(options);
+    initializeDocument();
+// done hiding -->
+    </script>
+<noscript>You must enable JavaScript in your browser.</noscript>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+<head>
+<html><head>
+<meta http-equiv='Pragma' content='no-cache'>
+<link rel=stylesheet href='stylemain.css' type='text/css'>
+<link rel=stylesheet href='colors.css' type='text/css'>
+
+<script language='javascript' src='menuTree.js'></script>
+<script language='javascript' src='menuTitle.js'></script>
+<script language='javascript' src='menuBcm.js'></script>
+<script language='javascript'>
+function frmLoad()
+{
+  parent.preload('wlcfg.html');
+}
+</script>
+<title></title>
+<base target="_self">
+</head>
+<body class='mainMenuBody' topmargin="15" leftmargin="15" marginwidth="0" marginheight="0" onLoad='frmLoad()'>
+<table border="0" align="center" cellpadding="0" bordercolor='#afb3b5' cellspacing="1" width="150">
+  <tr>
+    <td class='menu' valign="top" align="middle">
+	<script language='javascript'>
+<!-- hide
+   var options = new Array('<%ejGet(curUserName)%>',
+                           '<%ejGetWl(wlInterface)%>'
+                          );
+
+   createWirelessMenu(options);
+   initializeDocument();
+// done hiding -->
+    </script>
+<noscript>You must enable JavaScript in your browser.</noscript>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+
