@@ -88,7 +88,7 @@ static char *args[1024], **argptr = args;
 static int indent;
 static struct termios ios_org;
 static int rows = 0, cols = 0;
-static struct menu *current_menu;
+static struct menu *current_conf_menu;
 static int child_count;
 static int do_resize;
 static int single_menu_mode;
@@ -289,7 +289,7 @@ static void build_conf(struct menu *menu)
 	sym = menu->sym;
 	prop = menu->prompt;
 	if (!sym) {
-		if (prop && menu != current_menu) {
+		if (prop && menu != current_conf_menu) {
 			const char *prompt = menu_get_prompt(menu);
 			switch (prop->type) {
 			case P_MENU:
@@ -368,7 +368,7 @@ static void build_conf(struct menu *menu)
 		}
 		cprint_done();
 	} else {
-		if (menu == current_menu) {
+		if (menu == current_conf_menu) {
 			cprint(":%p", menu);
 			cprint("---%*c%s", indent + 1, ' ', menu_get_prompt(menu));
 			goto conf_childs;
@@ -450,7 +450,7 @@ static void conf(struct menu *menu)
 		cprint("%d", cols);
 		cprint("%d", rows - 10);
 		cprint("%s", active_entry);
-		current_menu = menu;
+		current_conf_menu = menu;
 		build_conf(menu);
 		if (!child_count)
 			break;
@@ -616,7 +616,7 @@ static void conf_choice(struct menu *menu)
 		cprint("70");
 		cprint("6");
 
-		current_menu = menu;
+		current_conf_menu = menu;
 		for (child = menu->list; child; child = child->next) {
 			if (!menu_is_visible(child))
 				continue;
