@@ -84,7 +84,7 @@ endif
 ifeq ($(strip $(BRCM_UCLIBC)),y)
 NTC=1
 ifeq ($(strip $(NTC)),1)
-TOOLCHAIN=/opt/toolchains_3_00/uclibc-crosstools
+TOOLCHAIN=/opt/toolchains/uclibc-crosstools
 CROSS_COMPILE = $(TOOLCHAIN)/bin/mips-linux-uclibc-
 else
 TOOLCHAIN=/opt/toolchains/uclibc
